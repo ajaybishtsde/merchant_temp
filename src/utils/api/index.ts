@@ -13,9 +13,7 @@ const getToken = () => {
   return admin.token;
 };
 
-export const createAuthorizationHeader = (
-  extraHeaders: Record<string, string> = {},
-) => ({
+export const createAuthorizationHeader = (extraHeaders: Record<string, string> = {}) => ({
   headers: {
     Authorization: `Bearer ${getToken()}`,
     'Content-Type': 'application/json',

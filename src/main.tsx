@@ -9,8 +9,8 @@ import './static/css/satoshi.css';
 // import 'jsvectormap/dist/css/jsvectormap.css';
 import 'flatpickr/dist/flatpickr.min.css';
 import 'react-toastify/dist/ReactToastify.css';
-import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-quartz.css";
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-quartz.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'swiper/css';
@@ -26,11 +26,11 @@ import { ToastContainer } from 'react-toastify';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   // <React.StrictMode>
-    <Router>
-      <UserProvider>
-        <ToastContainer progressClassName="toastProgress" autoClose={1000} />
-        <App />
-      </UserProvider>
-    </Router>
+  <Router>
+    <UserProvider>
+      <ToastContainer progressClassName="toastProgress" autoClose={1000} />
+      <App />
+    </UserProvider>
+  </Router>,
   // </React.StrictMode>,
 );

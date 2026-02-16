@@ -1,34 +1,34 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 
 interface SwitchInputProps {
-    initialValue?: boolean;
-    onChange?: (value: boolean) => void;
+  initialValue?: boolean;
+  onChange?: (value: boolean) => void;
 }
 const SwitchInput: React.FC<SwitchInputProps> = ({ initialValue, onChange }) => {
-    const [checked, setChecked] = React.useState(initialValue);
+  const [checked, setChecked] = React.useState(initialValue);
 
-    useEffect(() => {
-        setChecked(initialValue);
-    }, [initialValue]);
+  useEffect(() => {
+    setChecked(initialValue);
+  }, [initialValue]);
 
-    const toggleSwitch = () => {
-        const newValue = !checked;
-        setChecked(newValue);
-        if (onChange) {
-            onChange(newValue);
-        }
-    };
+  const toggleSwitch = () => {
+    const newValue = !checked;
+    setChecked(newValue);
+    if (onChange) {
+      onChange(newValue);
+    }
+  };
 
-    return (
-        <div
-            className={`relative w-12 h-6 bg-gray-200 rounded-full cursor-pointer ${checked ? 'bg-blue-600' : 'bg-slate-200'}`}
-            onClick={toggleSwitch}
-        >
-            <div
-                className={`absolute left-0 top-0 w-6 h-6 bg-white rounded-full shadow-md transform transition-transform ${checked ? 'translate-x-full' : ''}`}
-            />
-        </div>
-    );
-}
+  return (
+    <div
+      className={`relative w-12 h-6 bg-gray-200 rounded-full cursor-pointer ${checked ? 'bg-blue-600' : 'bg-slate-200'}`}
+      onClick={toggleSwitch}
+    >
+      <div
+        className={`absolute left-0 top-0 w-6 h-6 bg-white rounded-full shadow-md transform transition-transform ${checked ? 'translate-x-full' : ''}`}
+      />
+    </div>
+  );
+};
 
-export default SwitchInput
+export default SwitchInput;

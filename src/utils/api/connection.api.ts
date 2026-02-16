@@ -44,9 +44,7 @@ export interface ConnectionQuery {
 
 export const ConnectionAPI = {
   create: (data: NewConnection) =>
-    handleRequest(
-      api.post(`/${prefix}`, data, createAuthorizationFormDataHeader()),
-    ),
+    handleRequest(api.post(`/${prefix}`, data, createAuthorizationFormDataHeader())),
   getAll: (query?: ConnectionQuery) =>
     handleRequest(
       api.get(`/${prefix}/get-connections`, { params: query, ...createAuthorizationHeader() }),
@@ -54,20 +52,10 @@ export const ConnectionAPI = {
   delete: (id: number) =>
     handleRequest(api.delete(`/${prefix}/${id}`, createAuthorizationHeader())),
   update: (id: number, updateReason: Partial<NewConnection>) =>
-    handleRequest(
-      api.patch(
-        `/${prefix}/${id}`,
-        updateReason,
-        createAuthorizationFormDataHeader(),
-      ),
-    ),
+    handleRequest(api.patch(`/${prefix}/${id}`, updateReason, createAuthorizationFormDataHeader())),
   updateStatus: (id: number, status: boolean) => {
     return handleRequest(
-      api.patch(
-        `/${prefix}/${id}`,
-        { isActive: status },
-        createAuthorizationHeader(),
-      ),
+      api.patch(`/${prefix}/${id}`, { isActive: status }, createAuthorizationHeader()),
     );
   },
 };

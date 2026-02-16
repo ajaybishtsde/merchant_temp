@@ -4,7 +4,7 @@ import SidebarLink from './SidebarLink';
 import { links } from '@/utils/app.sidebar-data';
 import { GrClose } from 'react-icons/gr';
 import DarkModeSwitcher from '../Header/DarkModeSwitcher';
-import { CiLogout } from "react-icons/ci";
+import { CiLogout } from 'react-icons/ci';
 import { useCurrentUser } from '@/context/userContext';
 import useColorMode from '@/hooks/useColorMode';
 import PhoneMockUp from '@/static/images/logo/logo.png';
@@ -30,11 +30,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
       if (!sidebar.current || !trigger.current) return;
-      if (
-        !sidebarOpen ||
-        sidebar.current.contains(target) ||
-        trigger.current.contains(target)
-      )
+      if (!sidebarOpen || sidebar.current.contains(target) || trigger.current.contains(target))
         return;
       setSidebarOpen(false);
     };
@@ -64,8 +60,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   return (
     <aside
       ref={sidebar}
-      className={`absolute left-0 top-0 z-9999 flex justify-between h-screen w-72.5 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
+      className={`absolute left-0 top-0 z-9999 flex justify-between h-screen w-72.5 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
+        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+      }`}
     >
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="flex justify-between gap-2 px-6 py-5 ">
@@ -83,7 +80,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           aria-expanded={sidebarOpen}
           className="block lg:hidden"
         >
-          <GrClose className='text-gray' />
+          <GrClose className="text-gray" />
         </button>
       </div>
       {/* <!-- SIDEBAR HEADER --> */}
@@ -108,7 +105,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             className="flex gap-9 py-2 font-medium duration-300 ease-in-out hover:text-blue-200 pl-6 "
             onClick={() => logOutUser()}
           >
-            <CiLogout className='text-2xl' />
+            <CiLogout className="text-2xl" />
             Log Out
           </button>
         </div>

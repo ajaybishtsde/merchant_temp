@@ -10,7 +10,7 @@ export type RsvpUser = {
 };
 
 export type RsvpResult = {
-  "Locked In": RsvpUser[];
+  'Locked In': RsvpUser[];
   Maybe: RsvpUser[];
 };
 
@@ -23,11 +23,5 @@ export type GetRsvpResponse = {
 
 export const RsvpAPi = {
   get: ({ eventId }: { eventId: number }): Promise<GetRsvpResponse> =>
-    handleRequest(
-      api.get(
-        `/${prefix}/all/${eventId}`,
-        createAuthorizationHeader(),
-      ),
-    ),
+    handleRequest(api.get(`/${prefix}/all/${eventId}`, createAuthorizationHeader())),
 };
-

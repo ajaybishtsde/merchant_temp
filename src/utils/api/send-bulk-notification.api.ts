@@ -56,21 +56,14 @@ export const SendBulkNotificationAPI = {
         createAuthorizationHeader({ 'Idempotency-Key': idempotencyKey }),
       ),
     ),
-  getAll: () =>
-    handleRequest(api.get(`/${prefix}`, { ...createAuthorizationHeader() })),
+  getAll: () => handleRequest(api.get(`/${prefix}`, { ...createAuthorizationHeader() })),
   delete: (id: number) =>
     handleRequest(api.delete(`/${prefix}/${id}`, createAuthorizationHeader())),
   update: (id: number, updateReason: Partial<NewSendBulkNotification>) =>
-    handleRequest(
-      api.patch(`/${prefix}/${id}`, updateReason, createAuthorizationHeader()),
-    ),
+    handleRequest(api.patch(`/${prefix}/${id}`, updateReason, createAuthorizationHeader())),
   updateStatus: (id: number, status: boolean) => {
     return handleRequest(
-      api.patch(
-        `/${prefix}/${id}`,
-        { isActive: status },
-        createAuthorizationHeader(),
-      ),
+      api.patch(`/${prefix}/${id}`, { isActive: status }, createAuthorizationHeader()),
     );
   },
 };

@@ -12,13 +12,21 @@ interface CreateUpdateFormProps {
   updateData?: IInterest;
 }
 
-const CreateUpdateForm: React.FC<CreateUpdateFormProps> = ({ isOpen, toggleModal, fetchLatestData, updateData }) => {
-
-  const { register, handleSubmit, formState: { errors } } = useForm<NewInterest>({
-    defaultValues: updateData || {}
+const CreateUpdateForm: React.FC<CreateUpdateFormProps> = ({
+  isOpen,
+  toggleModal,
+  fetchLatestData,
+  updateData,
+}) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<NewInterest>({
+    defaultValues: updateData || {},
   });
-  const [isActive, setIsActive] = useState(updateData?.isActive ?? true)
-  const [isTopInterest, setIsTopInterest] = useState(updateData?.isTopInterest ?? true)
+  const [isActive, setIsActive] = useState(updateData?.isActive ?? true);
+  const [isTopInterest, setIsTopInterest] = useState(updateData?.isTopInterest ?? true);
 
   const inputFields = [
     { label: 'Name', name: 'name', placeholder: 'Enter Interest name', type: 'text' },
@@ -28,22 +36,27 @@ const CreateUpdateForm: React.FC<CreateUpdateFormProps> = ({ isOpen, toggleModal
     const formData = {
       name: data.name,
       isActive,
-      isTopInterest
+      isTopInterest,
     };
     try {
-      const res = updateData ? await InterestAPI.update(updateData.id, formData) : await InterestAPI.create(formData);
+      const res = updateData
+        ? await InterestAPI.update(updateData.id, formData)
+        : await InterestAPI.create(formData);
 
       toast.success(res.message, { position: toast.POSITION.TOP_RIGHT, autoClose: 1000 });
       fetchLatestData();
       toggleModal();
     } catch (error: any) {
-      toast.error(error.message || 'Something went wrong', { position: toast.POSITION.TOP_RIGHT, autoClose: 1000 });
+      toast.error(error.message || 'Something went wrong', {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
   };
 
   return (
-    <div className='container mx-auto rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark'>
-      <BaseModal isOpen={isOpen} toggleModal={toggleModal} heading='Interest'>
+    <div className="container mx-auto rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+      <BaseModal isOpen={isOpen} toggleModal={toggleModal} heading="Interest">
         <div className="w-full p-4">
           <form onSubmit={handleSubmit(onSubmit)}>
             {inputFields.map(({ label, name, placeholder, type }) => (
@@ -62,19 +75,13 @@ const CreateUpdateForm: React.FC<CreateUpdateFormProps> = ({ isOpen, toggleModal
             ))}
 
             <div className="mb-4">
-              <p className='mb-2 block font-medium'>Is this top Interest</p>
-              <SwitchInput
-                initialValue={isTopInterest}
-                onChange={e => setIsTopInterest(e)}
-              />
+              <p className="mb-2 block font-medium">Is this top Interest</p>
+              <SwitchInput initialValue={isTopInterest} onChange={(e) => setIsTopInterest(e)} />
             </div>
 
             <div className="mb-4">
-              <p className='mb-2 block font-medium'>Is Active</p>
-              <SwitchInput
-                initialValue={isActive}
-                onChange={e => setIsActive(e)}
-              />
+              <p className="mb-2 block font-medium">Is Active</p>
+              <SwitchInput initialValue={isActive} onChange={(e) => setIsActive(e)} />
             </div>
 
             <div className="mb-5">
@@ -87,8 +94,8 @@ const CreateUpdateForm: React.FC<CreateUpdateFormProps> = ({ isOpen, toggleModal
           </form>
         </div>
         {/* </div> */}
-      </BaseModal >
-    </div >
+      </BaseModal>
+    </div>
   );
 };
 

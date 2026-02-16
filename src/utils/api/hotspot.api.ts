@@ -1,12 +1,12 @@
-import { MongoResponse } from "@/components/common/Interfaces";
+import { MongoResponse } from '@/components/common/Interfaces';
 import {
   api,
   handleRequest,
   createAuthorizationHeader,
   createAuthorizationFormDataHeader,
-} from ".";
+} from '.';
 
-const prefix: string = "hotspot";
+const prefix: string = 'hotspot';
 
 interface dayOpeningHours {
   day: string;
@@ -79,13 +79,9 @@ export interface HotspotQuery {
 
 export const HotspotAPI = {
   create: (data: FormData) =>
-    handleRequest(
-      api.post(`/${prefix}`, data, createAuthorizationFormDataHeader()),
-    ),
+    handleRequest(api.post(`/${prefix}`, data, createAuthorizationFormDataHeader())),
   getAll: (query?: HotspotQuery) =>
-    handleRequest(
-      api.get(`/${prefix}`, { params: query, ...createAuthorizationHeader() }),
-    ),
+    handleRequest(api.get(`/${prefix}`, { params: query, ...createAuthorizationHeader() })),
   delete: (id: number, query: { type: string }) =>
     handleRequest(
       api.delete(`/${prefix}/${id}`, {
@@ -94,20 +90,10 @@ export const HotspotAPI = {
       }),
     ),
   update: (id: number, updateReason: FormData) =>
-    handleRequest(
-      api.patch(
-        `/${prefix}/${id}`,
-        updateReason,
-        createAuthorizationFormDataHeader(),
-      ),
-    ),
+    handleRequest(api.patch(`/${prefix}/${id}`, updateReason, createAuthorizationFormDataHeader())),
   updateStatus: (id: number, updateFlag: object, hotspotType: string) => {
     return handleRequest(
-      api.patch(
-        `/${prefix}/${id}`,
-        { ...updateFlag, hotspotType },
-        createAuthorizationHeader(),
-      ),
+      api.patch(`/${prefix}/${id}`, { ...updateFlag, hotspotType }, createAuthorizationHeader()),
     );
   },
 };

@@ -1,4 +1,3 @@
-
 # React Vite Project
 
 This is a simple project setup using React with Vite. Vite provides a fast build process and development server for modern web projects.
@@ -96,4 +95,3 @@ npm run preview
 ## License
 
 This project is licensed under the MIT License.
-

@@ -16,10 +16,10 @@ const customStyles = {
 interface ModalProps {
   isOpen: boolean;
   toggleModal: () => void;
-  eventId:number
+  eventId: number;
 }
 
-const ViewGuestList: React.FC<ModalProps> = ({ isOpen, toggleModal,eventId }) => {
+const ViewGuestList: React.FC<ModalProps> = ({ isOpen, toggleModal, eventId }) => {
   const navigate = useNavigate();
 
   const [search, setSearch] = useState('');
@@ -37,12 +37,9 @@ const ViewGuestList: React.FC<ModalProps> = ({ isOpen, toggleModal,eventId }) =>
   const activeUsers: RsvpUser[] = useMemo(() => {
     if (!rsvpUsers) return [];
 
-    const list =
-      activeTab === 'locked' ? rsvpUsers['Locked In'] : rsvpUsers.Maybe;
+    const list = activeTab === 'locked' ? rsvpUsers['Locked In'] : rsvpUsers.Maybe;
     return list?.filter((user) =>
-      `${user.firstName} ${user.lastName}`
-        .toLowerCase()
-        .includes(search.toLowerCase()),
+      `${user.firstName} ${user.lastName}`.toLowerCase().includes(search.toLowerCase()),
     );
   }, [rsvpUsers, activeTab, search]);
 
@@ -69,10 +66,7 @@ const ViewGuestList: React.FC<ModalProps> = ({ isOpen, toggleModal,eventId }) =>
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-3 border-b">
           <h3 className="text-lg font-semibold">Guest List</h3>
-          <button
-            onClick={toggleModal}
-            className="text-gray-400 hover:text-gray-600"
-          >
+          <button onClick={toggleModal} className="text-gray-400 hover:text-gray-600">
             ✕
           </button>
         </div>
@@ -128,9 +122,7 @@ const ViewGuestList: React.FC<ModalProps> = ({ isOpen, toggleModal,eventId }) =>
                 </li>
               ))
             ) : (
-              <li className="text-center text-sm text-gray-500 py-6">
-                No users found
-              </li>
+              <li className="text-center text-sm text-gray-500 py-6">No users found</li>
             )}
           </ul>
         </div>

@@ -9,7 +9,6 @@ import { toast } from 'react-toastify';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
 import { AdminAPI, AdminLogin } from '@/utils/api/admin.api';
 
-
 const SignIn: React.FC = () => {
   const navigate = useNavigate();
   const [isPassword, setIsPassword] = React.useState<boolean>(true);
@@ -29,18 +28,18 @@ const SignIn: React.FC = () => {
   const onSubmit = async (data: AdminLogin) => {
     try {
       const res = await AdminAPI.login(data);
-      console.log('res', res)
+      console.log('res', res);
       if (res) {
-        toast.success("user logged-in successfully", {
+        toast.success('user logged-in successfully', {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        localStorage.setItem("admin", JSON.stringify(res.result));
+        localStorage.setItem('admin', JSON.stringify(res.result));
         setCurrentUser(res.result);
-        navigate("/dashboard");
+        navigate('/dashboard');
       }
     } catch (error: any) {
-      toast.error(error?.message || "Something went wrong", {
+      toast.error(error?.message || 'Something went wrong', {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
@@ -52,7 +51,7 @@ const SignIn: React.FC = () => {
   };
 
   return (
-    <section className='min-h-screen h-full flex justify-center items-center'>
+    <section className="min-h-screen h-full flex justify-center items-center">
       <div className=" container mx-auto rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="flex flex-wrap items-center">
           <div className="hidden w-full xl:block xl:w-1/2">
@@ -77,7 +76,7 @@ const SignIn: React.FC = () => {
                     <input
                       type="email"
                       placeholder="Enter your email"
-                      {...register("email", { required: true })}
+                      {...register('email', { required: true })}
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
 
@@ -85,9 +84,7 @@ const SignIn: React.FC = () => {
                       <TfiEmail />
                     </span>
                   </div>
-                  {errors.email && (
-                    <div className="text-sm text-red-600">Email is required</div>
-                  )}
+                  {errors.email && <div className="text-sm text-red-600">Email is required</div>}
                 </div>
 
                 <div className="mb-6">
@@ -96,13 +93,16 @@ const SignIn: React.FC = () => {
                   </label>
                   <div className="relative">
                     <input
-                      type={isPassword ? "password" : "text"}
+                      type={isPassword ? 'password' : 'text'}
                       placeholder="6+ Characters, 1 Capital letter"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                      {...register("password", { required: true })}
+                      {...register('password', { required: true })}
                     />
 
-                    <span className="absolute right-4 top-4 cursor-pointer" onClick={togglePassword}>
+                    <span
+                      className="absolute right-4 top-4 cursor-pointer"
+                      onClick={togglePassword}
+                    >
                       {isPassword ? <BsEye /> : <BsEyeSlash />}
                     </span>
                   </div>

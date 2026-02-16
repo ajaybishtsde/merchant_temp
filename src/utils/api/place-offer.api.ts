@@ -45,9 +45,7 @@ export const PlaceOfferAPI = {
   create: (data: NewPlaceOffer) =>
     handleRequest(api.post(`/${prefix}`, data, createAuthorizationHeader())),
   getAll: (query?: Query) =>
-    handleRequest(
-      api.get(`/${prefix}`, { params: query, ...createAuthorizationHeader() }),
-    ),
+    handleRequest(api.get(`/${prefix}`, { params: query, ...createAuthorizationHeader() })),
   getAllPlaces: (query?: Query) =>
     handleRequest(
       api.get(`/hotspot/all-places`, {
@@ -58,16 +56,10 @@ export const PlaceOfferAPI = {
   delete: (id: number) =>
     handleRequest(api.delete(`/${prefix}/${id}`, createAuthorizationHeader())),
   update: (id: number, updateReason: FormData | Partial<NewPlaceOffer>) =>
-    handleRequest(
-      api.patch(`/${prefix}/${id}`, updateReason, createAuthorizationHeader()),
-    ),
+    handleRequest(api.patch(`/${prefix}/${id}`, updateReason, createAuthorizationHeader())),
   updateStatus: (id: number, status: boolean) => {
     return handleRequest(
-      api.patch(
-        `/${prefix}/${id}`,
-        { is_active: status },
-        createAuthorizationHeader(),
-      ),
+      api.patch(`/${prefix}/${id}`, { is_active: status }, createAuthorizationHeader()),
     );
   },
 };

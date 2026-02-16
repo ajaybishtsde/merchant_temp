@@ -22,9 +22,7 @@ function App() {
   }, []);
 
   const renderRoutes = (routes: RouteObject[]) => {
-    return routes.map((r: RouteObject) => (
-      <Route path={r.path} element={r.element} key={r.path} />
-    ));
+    return routes.map((r: RouteObject) => <Route path={r.path} element={r.element} key={r.path} />);
   };
 
   return loading ? (
@@ -32,9 +30,7 @@ function App() {
   ) : (
     <div className="min-h-screen">
       <Routes>
-        <Route element={<PrivateRoute />}>
-          {renderRoutes(privateRoutes)}
-        </Route>
+        <Route element={<PrivateRoute />}>{renderRoutes(privateRoutes)}</Route>
         <Route>{renderRoutes(publicRoutes)}</Route>
       </Routes>
     </div>

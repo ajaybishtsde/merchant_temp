@@ -14,10 +14,7 @@ export interface ISystemSetting extends MongoResponse {
 }
 
 export const SystemSettingAPI = {
-  getAll: () =>
-    handleRequest(api.get(`/${prefix}`, { ...createAuthorizationHeader() })),
+  getAll: () => handleRequest(api.get(`/${prefix}`, { ...createAuthorizationHeader() })),
   update: (updateReason: Partial<NewSystemSetting>) =>
-    handleRequest(
-      api.patch(`/${prefix}`, updateReason, createAuthorizationHeader()),
-    ),
+    handleRequest(api.patch(`/${prefix}`, updateReason, createAuthorizationHeader())),
 };

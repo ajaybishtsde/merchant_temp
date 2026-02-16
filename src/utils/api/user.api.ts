@@ -127,13 +127,9 @@ export const UserAPI = {
   //     ),
   //   ),
   get: (id: number) =>
-    handleRequest(
-      api.get(`/${prefix}/toggles/${id}`, createAuthorizationHeader()),
-    ),
+    handleRequest(api.get(`/${prefix}/toggles/${id}`, createAuthorizationHeader())),
   delete: (id: number) =>
-    handleRequest(
-      api.delete(`/${prefix}/by-admin/${id}`, createAuthorizationHeader()),
-    ),
+    handleRequest(api.delete(`/${prefix}/by-admin/${id}`, createAuthorizationHeader())),
   all: (query?: UserQuery) =>
     handleRequest(
       api.get(`/${prefix}/all`, {
@@ -143,23 +139,13 @@ export const UserAPI = {
     ),
   updateStatus: (id: number, status: boolean) => {
     return handleRequest(
-      api.patch(
-        `/${prefix}/${id}`,
-        { isActive: status },
-        createAuthorizationHeader(),
-      ),
+      api.patch(`/${prefix}/${id}`, { isActive: status }, createAuthorizationHeader()),
     );
   },
   update: (id: number, updateReason: UpdateToggles) =>
     handleRequest(
-      api.patch(
-        `/${prefix}/admin-update/${id}`,
-        updateReason,
-        createAuthorizationHeader(),
-      ),
+      api.patch(`/${prefix}/admin-update/${id}`, updateReason, createAuthorizationHeader()),
     ),
-      getUserProfile:(id: string) : Promise<GetUserProfileResponse> =>
-    handleRequest(
-      api.get(`/${prefix}/profile-for-admin/${id}`, createAuthorizationHeader()),
-    ),
+  getUserProfile: (id: string): Promise<GetUserProfileResponse> =>
+    handleRequest(api.get(`/${prefix}/profile-for-admin/${id}`, createAuthorizationHeader())),
 };

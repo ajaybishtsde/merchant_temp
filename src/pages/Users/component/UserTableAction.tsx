@@ -10,10 +10,7 @@ interface UserTableActionProps {
   fetchUsers: () => void;
 }
 
-const UserTableAction: React.FC<UserTableActionProps> = ({
-  data,
-  fetchUsers,
-}) => {
+const UserTableAction: React.FC<UserTableActionProps> = ({ data, fetchUsers }) => {
   const [isDeleteUser, setIsDeleteUser] = React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isForEdit, setIsForEdit] = React.useState<boolean>(false);

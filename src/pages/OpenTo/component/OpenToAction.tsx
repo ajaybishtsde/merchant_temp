@@ -6,33 +6,33 @@ import { IOpenTo, OpenToAPI } from '@/utils/api/opento.api';
 import OpenToCU from './OpenToCU';
 
 interface OpenActionProps {
-    data: IOpenTo;
-    fetchOpenTo: () => void;
+  data: IOpenTo;
+  fetchOpenTo: () => void;
 }
 
 const OpenToAction: React.FC<OpenActionProps> = ({ data, fetchOpenTo }) => {
-    // const [isDeleteUser, setIsDeleteUser] = React.useState<boolean>(false);
-    const [isForEdit, setIsForEdit] = React.useState<boolean>(false);
+  // const [isDeleteUser, setIsDeleteUser] = React.useState<boolean>(false);
+  const [isForEdit, setIsForEdit] = React.useState<boolean>(false);
 
-    const toggleEditModel = () => {
-        setIsForEdit(!isForEdit);
-    };
+  const toggleEditModel = () => {
+    setIsForEdit(!isForEdit);
+  };
 
-    // const toggleDeleteAlertModel = () => {
-    //     setIsDeleteUser(!isDeleteUser);
-    // };
+  // const toggleDeleteAlertModel = () => {
+  //     setIsDeleteUser(!isDeleteUser);
+  // };
 
-    // const handleDeleteOpenTo = () => {
-    //     OpenToAPI.delete(data.id).then(() => {
-    //         toast.success('Deleted Successfully');
-    //         fetchOpenTo();
-    //         setIsDeleteUser(false);
-    //     });
-    // };
+  // const handleDeleteOpenTo = () => {
+  //     OpenToAPI.delete(data.id).then(() => {
+  //         toast.success('Deleted Successfully');
+  //         fetchOpenTo();
+  //         setIsDeleteUser(false);
+  //     });
+  // };
 
-    return (
-        <div>
-            {/* {isDeleteUser && (
+  return (
+    <div>
+      {/* {isDeleteUser && (
                 <DeleteAlertModel
                     isOpen={isDeleteUser}
                     onDelete={handleDeleteOpenTo}
@@ -40,30 +40,30 @@ const OpenToAction: React.FC<OpenActionProps> = ({ data, fetchOpenTo }) => {
                     deleteFor={'opento'}
                 />
             )} */}
-            {isForEdit && (
-                <OpenToCU
-                    isOpen={isForEdit}
-                    toggleModal={toggleEditModel}
-                    fetchLatestData={fetchOpenTo}
-                    updateData={data}
-                />
-            )}
-            <div className="flex gap-x-3 whitespace-nowrap capitalize mt-1">
-                <button
-                    className="bg-gray-500 hover:bg-gray-700 font-bold rounded bg-blue-600 text-white p-1"
-                    onClick={toggleEditModel}
-                >
-                    <MdModeEdit className="text-xl" />
-                </button>
-                {/* <button
+      {isForEdit && (
+        <OpenToCU
+          isOpen={isForEdit}
+          toggleModal={toggleEditModel}
+          fetchLatestData={fetchOpenTo}
+          updateData={data}
+        />
+      )}
+      <div className="flex gap-x-3 whitespace-nowrap capitalize mt-1">
+        <button
+          className="bg-gray-500 hover:bg-gray-700 font-bold rounded bg-blue-600 text-white p-1"
+          onClick={toggleEditModel}
+        >
+          <MdModeEdit className="text-xl" />
+        </button>
+        {/* <button
                     className="hover:bg-red-500 font-bold rounded bg-red-600 text-white p-1"
                     onClick={toggleDeleteAlertModel}
                 >
                     <MdDelete className="text-xl" />
                 </button> */}
-            </div>
-        </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default OpenToAction;

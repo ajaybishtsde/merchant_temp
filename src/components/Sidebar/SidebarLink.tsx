@@ -18,7 +18,9 @@ interface SidebarLinkProps {
   };
 }
 
-const SidebarLink: React.FC<SidebarLinkProps> = ({ link: { title, path, icon, subLinks, pathnameInclude } }) => {
+const SidebarLink: React.FC<SidebarLinkProps> = ({
+  link: { title, path, icon, subLinks, pathnameInclude },
+}) => {
   const location = useLocation();
   const { pathname } = location;
 

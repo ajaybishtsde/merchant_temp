@@ -23,12 +23,9 @@ export interface AdminMessageResponse {
 export const AdminMessageAPI = {
   create: (data: NewAdminMessage) =>
     handleRequest(api.post(`/${prefix}`, data, createAuthorizationHeader())),
-  getAll: () =>
-    handleRequest(api.get(`/${prefix}`, { ...createAuthorizationHeader() })),
+  getAll: () => handleRequest(api.get(`/${prefix}`, { ...createAuthorizationHeader() })),
   // delete: (id: number) =>
   //   handleRequest(api.delete(`/${prefix}/${id}`, createAuthorizationHeader())),
   update: (id: number, updateReason: Partial<NewAdminMessage>) =>
-    handleRequest(
-      api.patch(`/${prefix}/${id}`, updateReason, createAuthorizationHeader()),
-    ),
+    handleRequest(api.patch(`/${prefix}/${id}`, updateReason, createAuthorizationHeader())),
 };

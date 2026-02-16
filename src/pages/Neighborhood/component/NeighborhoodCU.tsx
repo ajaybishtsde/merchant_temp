@@ -15,40 +15,49 @@ interface StateWiseRateCUProps {
   updateData?: INeighborhood;
 }
 
-const StateWiseRateCU: React.FC<StateWiseRateCUProps> = ({ isOpen, toggleModal, fetchLatestData, updateData }) => {
+const StateWiseRateCU: React.FC<StateWiseRateCUProps> = ({
+  isOpen,
+  toggleModal,
+  fetchLatestData,
+  updateData,
+}) => {
   const [countries, setCountries] = useState<CountryResponse>({ count: 0, data: [] });
   const [states, setStates] = useState<StateResponse>({ count: 0, data: [] });
   const [cities, setCity] = useState<CityResponse>({ count: 0, data: [] });
 
-  const { register, handleSubmit, formState: { errors } } = useForm<NewNeighborhood>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<NewNeighborhood>({
     defaultValues: updateData
       ? {
-        name: updateData.name,
-        cityId: updateData.cityId,
-        stateId: updateData.stateId,
-        countryId: updateData.countryId,
-        location: updateData.location?.coordinates[0] || [],
-        isActive: updateData.isActive,
-      }
-      : {}
+          name: updateData.name,
+          cityId: updateData.cityId,
+          stateId: updateData.stateId,
+          countryId: updateData.countryId,
+          location: updateData.location?.coordinates[0] || [],
+          isActive: updateData.isActive,
+        }
+      : {},
   });
 
-  const [location, setLocation] = useState<[number, number][]>([])
+  const [location, setLocation] = useState<[number, number][]>([]);
 
   const fetchCountries = async () => {
     try {
-      const res = await CountryAPI.getAll({ isActive: true })
+      const res = await CountryAPI.getAll({ isActive: true });
       if (res.status) {
-        setCountries(res.result)
+        setCountries(res.result);
       }
     } catch (error) {
-      console.log("error: ", error)
+      console.log('error: ', error);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchCountries()
-  }, [])
+    fetchCountries();
+  }, []);
 
   useEffect(() => {
     if (!updateData) return;
@@ -69,26 +78,26 @@ const StateWiseRateCU: React.FC<StateWiseRateCUProps> = ({ isOpen, toggleModal, 
 
   const fetchStatesById = async (countryId: number) => {
     try {
-      setCity({ count: 0, data: [] })
-      const res = await StateAPI.getAll({ isActive: true, countryId })
+      setCity({ count: 0, data: [] });
+      const res = await StateAPI.getAll({ isActive: true, countryId });
       if (res.status) {
-        setStates(res.result)
+        setStates(res.result);
       }
     } catch (error) {
-      console.log("error: ", error)
+      console.log('error: ', error);
     }
-  }
+  };
 
   const fetchCitiesById = async (stateId?: number, countryId?: number) => {
     try {
-      const res = await CityAPI.getAll({ isActive: true, stateId, countryId })
+      const res = await CityAPI.getAll({ isActive: true, stateId, countryId });
       if (res.status) {
-        setCity(res.result)
+        setCity(res.result);
       }
     } catch (error) {
-      console.log("error: ", error)
+      console.log('error: ', error);
     }
-  }
+  };
 
   const onSubmit = async (data: NewNeighborhood) => {
     if (!updateData && (!location || location.length === 0)) {
@@ -100,22 +109,32 @@ const StateWiseRateCU: React.FC<StateWiseRateCUProps> = ({ isOpen, toggleModal, 
       location,
       cityId: data.cityId,
       stateId: data.stateId,
-      countryId: data.countryId
+      countryId: data.countryId,
     };
     try {
-      const res = updateData ? await NeighborhoodAPI.update(updateData.id, formData) : await NeighborhoodAPI.create(formData);
+      const res = updateData
+        ? await NeighborhoodAPI.update(updateData.id, formData)
+        : await NeighborhoodAPI.create(formData);
 
       toast.success(res.message, { position: toast.POSITION.TOP_RIGHT, autoClose: 1000 });
       fetchLatestData();
       toggleModal();
     } catch (error: any) {
-      toast.error(error.message || 'Something went wrong', { position: toast.POSITION.TOP_RIGHT, autoClose: 1000 });
+      toast.error(error.message || 'Something went wrong', {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
   };
 
   return (
-    <div className='container mx-auto rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark'>
-      <BaseModal isOpen={isOpen} toggleModal={toggleModal} heading='Neighborhood' customClass="md:w-[70%] w-[90%] max-h-screen min-h-screen overflow-y-auto h-auto right-0 absolute z-50">
+    <div className="container mx-auto rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+      <BaseModal
+        isOpen={isOpen}
+        toggleModal={toggleModal}
+        heading="Neighborhood"
+        customClass="md:w-[70%] w-[90%] max-h-screen min-h-screen overflow-y-auto h-auto right-0 absolute z-50"
+      >
         <div className="w-full p-4">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-4">
@@ -123,7 +142,7 @@ const StateWiseRateCU: React.FC<StateWiseRateCUProps> = ({ isOpen, toggleModal, 
               <input
                 type="text"
                 placeholder="Enter Neighborhood Name"
-                {...register("name", { required: true })}
+                {...register('name', { required: true })}
                 className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
               />
               {errors['name' as keyof NewNeighborhood] && (
@@ -134,16 +153,17 @@ const StateWiseRateCU: React.FC<StateWiseRateCUProps> = ({ isOpen, toggleModal, 
               <label className="mb-2.5 block font-medium">Select Location</label>
               <GeoFenceComponent setMapCoordinates={setLocation} updateData={updateData} />
 
-              {!location && (
-                <div className="text-sm text-red-600">Location is required</div>
-              )}
+              {!location && <div className="text-sm text-red-600">Location is required</div>}
             </div>
-
 
             <div className="mb-4">
               <label className="mb-2.5 block font-medium">Country</label>
               <select
-                {...register("countryId", { required: true, valueAsNumber: true, onChange: fetchStates })}
+                {...register('countryId', {
+                  required: true,
+                  valueAsNumber: true,
+                  onChange: fetchStates,
+                })}
                 className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white"
               >
                 <option value="">Select Country</option>
@@ -157,15 +177,17 @@ const StateWiseRateCU: React.FC<StateWiseRateCUProps> = ({ isOpen, toggleModal, 
                   </option>
                 ))}
               </select>
-              {errors.countryId && (
-                <div className="text-sm text-red-600">Country is required</div>
-              )}
+              {errors.countryId && <div className="text-sm text-red-600">Country is required</div>}
             </div>
 
             <div className="mb-4">
               <label className="mb-2.5 block font-medium">State</label>
               <select
-                {...register("stateId", { required: true, valueAsNumber: true, onChange: fetchCities })}
+                {...register('stateId', {
+                  required: true,
+                  valueAsNumber: true,
+                  onChange: fetchCities,
+                })}
                 className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white"
               >
                 <option value="">Select State</option>
@@ -179,31 +201,23 @@ const StateWiseRateCU: React.FC<StateWiseRateCUProps> = ({ isOpen, toggleModal, 
                   </option>
                 ))}
               </select>
-              {errors.stateId && (
-                <div className="text-sm text-red-600">State is required</div>
-              )}
+              {errors.stateId && <div className="text-sm text-red-600">State is required</div>}
             </div>
 
             <div className="mb-4">
               <label className="mb-2.5 block font-medium">City</label>
               <select
-                {...register("cityId", { required: true, valueAsNumber: true })}
+                {...register('cityId', { required: true, valueAsNumber: true })}
                 className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white"
               >
                 <option value="">Select City</option>
                 {cities.data.map((city) => (
-                  <option
-                    key={city.id}
-                    value={city.id}
-                    selected={city.id === updateData?.cityId}
-                  >
+                  <option key={city.id} value={city.id} selected={city.id === updateData?.cityId}>
                     {city.name}
                   </option>
                 ))}
               </select>
-              {errors.cityId && (
-                <div className="text-sm text-red-600">City is required</div>
-              )}
+              {errors.cityId && <div className="text-sm text-red-600">City is required</div>}
             </div>
 
             <div className="mb-5">
@@ -215,8 +229,8 @@ const StateWiseRateCU: React.FC<StateWiseRateCUProps> = ({ isOpen, toggleModal, 
             </div>
           </form>
         </div>
-      </BaseModal >
-    </div >
+      </BaseModal>
+    </div>
   );
 };
 

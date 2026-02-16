@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 
 interface PaginationProps {
@@ -76,20 +75,45 @@ const Pagination: React.FC<PaginationProps> = ({ total, getRequestData }) => {
         <div className="font-semibold">Total Count: {total}</div>
         {isOpen && (
           <div className="origin-bottom-right absolute bottom-full mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-            <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-              <button onClick={() => changePageSize(10)} className="block px-4 py-2 text-sm text-black hover:bg-gray-900 hover:text-gray-900" role="menuitem">
+            <div
+              className="py-1"
+              role="menu"
+              aria-orientation="vertical"
+              aria-labelledby="options-menu"
+            >
+              <button
+                onClick={() => changePageSize(10)}
+                className="block px-4 py-2 text-sm text-black hover:bg-gray-900 hover:text-gray-900"
+                role="menuitem"
+              >
                 10
               </button>
-              <button onClick={() => changePageSize(20)} className="block px-4 py-2 text-sm text-black hover:bg-gray-100 hover:text-gray-900" role="menuitem">
+              <button
+                onClick={() => changePageSize(20)}
+                className="block px-4 py-2 text-sm text-black hover:bg-gray-100 hover:text-gray-900"
+                role="menuitem"
+              >
                 20
               </button>
-              <button onClick={() => changePageSize(50)} className="block px-4 py-2 text-sm text-black hover:bg-gray-100 hover:text-gray-900" role="menuitem">
+              <button
+                onClick={() => changePageSize(50)}
+                className="block px-4 py-2 text-sm text-black hover:bg-gray-100 hover:text-gray-900"
+                role="menuitem"
+              >
                 50
               </button>
-              <button onClick={() => changePageSize(100)} className="block px-4 py-2 text-sm text-black hover:bg-gray-100 hover:text-gray-900" role="menuitem">
+              <button
+                onClick={() => changePageSize(100)}
+                className="block px-4 py-2 text-sm text-black hover:bg-gray-100 hover:text-gray-900"
+                role="menuitem"
+              >
                 100
               </button>
-              <button onClick={() => changePageSize(500)} className="block px-4 py-2 text-sm text-black hover:bg-gray-100 hover:text-gray-900" role="menuitem">
+              <button
+                onClick={() => changePageSize(500)}
+                className="block px-4 py-2 text-sm text-black hover:bg-gray-100 hover:text-gray-900"
+                role="menuitem"
+              >
                 500
               </button>
             </div>
@@ -104,7 +128,9 @@ const Pagination: React.FC<PaginationProps> = ({ total, getRequestData }) => {
         >
           Previous
         </button>
-        <p className="text-sm text-black hover:text-black focus:outline-none inline py-2 px-4">{pageNo}</p>
+        <p className="text-sm text-black hover:text-black focus:outline-none inline py-2 px-4">
+          {pageNo}
+        </p>
         <button
           onClick={nextPage}
           disabled={pageNo === totalPages}
@@ -112,7 +138,6 @@ const Pagination: React.FC<PaginationProps> = ({ total, getRequestData }) => {
         >
           Next
         </button>
-
       </div>
     </div>
   );

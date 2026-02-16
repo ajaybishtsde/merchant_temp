@@ -79,11 +79,7 @@ const PlaceOfferCU: React.FC<PlaceOfferCUProps> = ({
 
   return (
     <div className="container mx-auto rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-      <BaseModal
-        isOpen={isOpen}
-        toggleModal={toggleModal}
-        heading="Place Offers"
-      >
+      <BaseModal isOpen={isOpen} toggleModal={toggleModal} heading="Place Offers">
         <div className="w-full p-4">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-4">
@@ -106,15 +102,11 @@ const PlaceOfferCU: React.FC<PlaceOfferCUProps> = ({
                   </option>
                 ))}
               </select>
-              {errors.place_id && (
-                <div className="text-sm text-red-600">Place is required</div>
-              )}
+              {errors.place_id && <div className="text-sm text-red-600">Place is required</div>}
             </div>
 
             <div className="mb-4">
-              <label className="mb-2.5 block font-medium">
-                Enter Redeem code
-              </label>
+              <label className="mb-2.5 block font-medium">Enter Redeem code</label>
               <input
                 type="text"
                 placeholder="Enter Redem Code Name"
@@ -122,25 +114,19 @@ const PlaceOfferCU: React.FC<PlaceOfferCUProps> = ({
                 className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
               />
               {errors.redeem_code && (
-                <div className="text-sm text-red-600">
-                  Redeem code is required
-                </div>
+                <div className="text-sm text-red-600">Redeem code is required</div>
               )}
             </div>
 
             <div className="mb-4">
-              <label className="mb-2.5 block font-medium">
-                Enter Description
-              </label>
+              <label className="mb-2.5 block font-medium">Enter Description</label>
               <textarea
                 placeholder="Enter Description"
                 {...register('description', { required: true })}
                 className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
               />
               {errors.description && (
-                <div className="text-sm text-red-600">
-                  Description is required
-                </div>
+                <div className="text-sm text-red-600">Description is required</div>
               )}
             </div>
 
@@ -152,9 +138,7 @@ const PlaceOfferCU: React.FC<PlaceOfferCUProps> = ({
                 className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
               />
               {errors.expiry_date && (
-                <div className="text-sm text-red-600">
-                  Expiry Date is required
-                </div>
+                <div className="text-sm text-red-600">Expiry Date is required</div>
               )}
             </div>
 

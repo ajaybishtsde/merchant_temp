@@ -19,6 +19,5 @@ const masterConfig = {
   },
 };
 
-export const { server_url, BASE_URL } =
-  masterConfig[env as keyof typeof masterConfig];
+export const { server_url, BASE_URL } = masterConfig[env as keyof typeof masterConfig];
 export const SERVER_ENV = env;

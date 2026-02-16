@@ -1,31 +1,23 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   FieldErrors,
   useForm,
   UseFormRegister,
   UseFormSetValue,
   UseFormWatch,
-} from "react-hook-form";
-import { toast } from "react-toastify";
-import BaseModal from "@/components/common/model";
-import {
-  NeighborhoodAPI,
-  NeighborhoodResponse,
-} from "@/utils/api/neighborhood.api";
-import {
-  HotspotAPI,
-  IPlaceHotspot,
-  NewHotspot,
-  NewPlaceHotspot,
-} from "@/utils/api/hotspot.api";
-import { LoadScript, Autocomplete } from "@react-google-maps/api";
-import debounce from "lodash.debounce";
-import PlaceForm from "./PlaceForm";
-import { PriceRangeAPI, PriceRangeResponse } from "@/utils/api/priceRange.api";
-import { VibeTypeAPI, VibeTypeResponse } from "@/utils/api/vibeType.api";
-import ButtonLoader from "@/components/common/Loader/ButtonLoader";
+} from 'react-hook-form';
+import { toast } from 'react-toastify';
+import BaseModal from '@/components/common/model';
+import { NeighborhoodAPI, NeighborhoodResponse } from '@/utils/api/neighborhood.api';
+import { HotspotAPI, IPlaceHotspot, NewHotspot, NewPlaceHotspot } from '@/utils/api/hotspot.api';
+import { LoadScript, Autocomplete } from '@react-google-maps/api';
+import debounce from 'lodash.debounce';
+import PlaceForm from './PlaceForm';
+import { PriceRangeAPI, PriceRangeResponse } from '@/utils/api/priceRange.api';
+import { VibeTypeAPI, VibeTypeResponse } from '@/utils/api/vibeType.api';
+import ButtonLoader from '@/components/common/Loader/ButtonLoader';
 
-const libraries = ["places"];
+const libraries = ['places'];
 
 interface HotspotCUProps {
   isOpen: boolean;
@@ -76,12 +68,12 @@ const HotspotCU: React.FC<HotspotCUProps> = ({
     control,
   } = useForm<NewPlaceHotspot>({
     defaultValues: {
-      placeDetails: "",
+      placeDetails: '',
     },
     shouldUnregister: true,
   });
 
-  const hotspotType = watch("hotspotType");
+  const hotspotType = watch('hotspotType');
 
   const fetchNeighborhood = async () => {
     try {
@@ -95,7 +87,7 @@ const HotspotCU: React.FC<HotspotCUProps> = ({
       const priceRange = await PriceRangeAPI.getAll({ isActive: true });
       setPriceRange(priceRange.result);
     } catch (error) {
-      console.log("error", error);
+      console.log('error', error);
     }
   };
   useEffect(() => {
@@ -111,7 +103,7 @@ const HotspotCU: React.FC<HotspotCUProps> = ({
         foodCategory: (updateData as IPlaceHotspot)?.foodCategory?.id,
         placeDetails: (updateData as IPlaceHotspot)?.placeDetails,
         placeOpeningHours: (updateData as IPlaceHotspot)?.placeOpeningHours,
-        dealDescription: (updateData as IPlaceHotspot)?.dealDescription || "",
+        dealDescription: (updateData as IPlaceHotspot)?.dealDescription || '',
         isDeal: (updateData as IPlaceHotspot)?.isDeal,
       });
     }
@@ -144,68 +136,52 @@ const HotspotCU: React.FC<HotspotCUProps> = ({
 
   const onLoad = (autocomplete: any) => {
     autocompleteRef.current = autocomplete;
-    autocomplete.setFields([
-      "place_id",
-      "name",
-      "formatted_address",
-      "geometry",
-    ]); //'international_phone_number', 'website', 'rating', 'reviews', 'opening_hours', 'types']);
+    autocomplete.setFields(['place_id', 'name', 'formatted_address', 'geometry']); //'international_phone_number', 'website', 'rating', 'reviews', 'opening_hours', 'types']);
   };
 
   const onSubmit = async (formData: NewPlaceHotspot) => {
     try {
-      console.log("formData: ", formData);
+      console.log('formData: ', formData);
       if (!formData.image && !updateData?.image) {
-        setImageError("Image is required");
+        setImageError('Image is required');
         return;
       }
       if (!updateData && (!place?.address || !place.place_id || !place.name)) {
-        toast.error(
-          "Oops! We couldn’t load location results. Please try again later.",
-        );
+        toast.error('Oops! We couldn’t load location results. Please try again later.');
         return;
       }
       setIsLoading(true);
       const form = new FormData();
 
-      form.append("neighborhoodId", String(formData.neighborhoodId));
-      form.append(
-        "hotspotType",
-        updateData?.hotspotType || formData.hotspotType || hotspotType,
-      );
+      form.append('neighborhoodId', String(formData.neighborhoodId));
+      form.append('hotspotType', updateData?.hotspotType || formData.hotspotType || hotspotType);
 
       if (!updateData) {
-        form.append("googleLatitude", String(place?.location.latitude));
-        form.append("googleLongitude", String(place?.location.longitude));
-        form.append("googleLocationName", String(place?.name));
-        form.append("googlePlaceId", String(place?.place_id));
-        form.append("googlePlaceAddress", String(place?.address));
+        form.append('googleLatitude', String(place?.location.latitude));
+        form.append('googleLongitude', String(place?.location.longitude));
+        form.append('googleLocationName', String(place?.name));
+        form.append('googlePlaceId', String(place?.place_id));
+        form.append('googlePlaceAddress', String(place?.address));
       }
-      form.append("priceRange", String(formData.priceRange));
-      form.append("vibeType", String(formData.vibeType));
+      form.append('priceRange', String(formData.priceRange));
+      form.append('vibeType', String(formData.vibeType));
       if (formData.image) {
-        form.append("image", formData.image);
+        form.append('image', formData.image);
       }
-      form.append(
-        "placeCategory",
-        String((formData as NewPlaceHotspot).placeCategory),
-      );
+      form.append('placeCategory', String((formData as NewPlaceHotspot).placeCategory));
       if ((formData as NewPlaceHotspot)?.foodCategory) {
-        form.append(
-          "foodCategory",
-          String((formData as NewPlaceHotspot).foodCategory),
-        );
+        form.append('foodCategory', String((formData as NewPlaceHotspot).foodCategory));
       }
-      form.append("placeDetails", (formData as NewPlaceHotspot).placeDetails);
+      form.append('placeDetails', (formData as NewPlaceHotspot).placeDetails);
       form.append(
-        "placeOpeningHours",
+        'placeOpeningHours',
         JSON.stringify((formData as NewPlaceHotspot).placeOpeningHours),
       );
 
-      form.append("isDeal", String((formData as NewPlaceHotspot).isDeal));
+      form.append('isDeal', String((formData as NewPlaceHotspot).isDeal));
       const dealDescription = (formData as NewPlaceHotspot).dealDescription;
       if (dealDescription) {
-        form.append("dealDescription", dealDescription);
+        form.append('dealDescription', dealDescription);
       }
 
       const res = updateData
@@ -222,7 +198,7 @@ const HotspotCU: React.FC<HotspotCUProps> = ({
       setIsLoading(false);
     } catch (error: any) {
       setIsLoading(false);
-      toast.error(error.message || "Something went wrong", {
+      toast.error(error.message || 'Something went wrong', {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
@@ -240,11 +216,9 @@ const HotspotCU: React.FC<HotspotCUProps> = ({
         <div className="w-full p-4">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-4">
-              <label className="mb-2.5 block font-medium">
-                Select Neighborhood
-              </label>
+              <label className="mb-2.5 block font-medium">Select Neighborhood</label>
               <select
-                {...register("neighborhoodId", { required: true })}
+                {...register('neighborhoodId', { required: true })}
                 className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
               >
                 <option value="">Select Neighborhood</option>
@@ -258,27 +232,20 @@ const HotspotCU: React.FC<HotspotCUProps> = ({
                   </option>
                 ))}
               </select>
-              {errors["neighborhoodId" as keyof NewHotspot] && (
-                <div className="text-sm text-red-600">
-                  Neighborhood is required
-                </div>
+              {errors['neighborhoodId' as keyof NewHotspot] && (
+                <div className="text-sm text-red-600">Neighborhood is required</div>
               )}
             </div>
             {!updateData && (
               <div className="mb-4">
-                <label className="mb-2.5 block font-medium">
-                  Enter Location Name
-                </label>
+                <label className="mb-2.5 block font-medium">Enter Location Name</label>
                 <LoadScript
                   libraries={libraries}
-                  googleMapsApiKey={process.env.GOOGLE_MAP_API_KEY || ""}
+                  googleMapsApiKey={process.env.GOOGLE_MAP_API_KEY || ''}
                 >
-                  <Autocomplete
-                    onLoad={onLoad}
-                    onPlaceChanged={debouncedPlaceChange}
-                  >
+                  <Autocomplete onLoad={onLoad} onPlaceChanged={debouncedPlaceChange}>
                     <input
-                      {...register("googleLocationName", { required: true })}
+                      {...register('googleLocationName', { required: true })}
                       type="text"
                       placeholder="Search for a place"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -286,19 +253,15 @@ const HotspotCU: React.FC<HotspotCUProps> = ({
                   </Autocomplete>
                 </LoadScript>
 
-                {errors["googleLocationName" as keyof NewHotspot] && (
-                  <div className="text-sm text-red-600">
-                    Location Name is required
-                  </div>
+                {errors['googleLocationName' as keyof NewHotspot] && (
+                  <div className="text-sm text-red-600">Location Name is required</div>
                 )}
               </div>
             )}
             <div className="mb-4">
-              <label className="mb-2.5 block font-medium">
-                Select Price Range
-              </label>
+              <label className="mb-2.5 block font-medium">Select Price Range</label>
               <select
-                {...register("priceRange")}
+                {...register('priceRange')}
                 className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
               >
                 <option value="">Select Price Range</option>
@@ -318,11 +281,9 @@ const HotspotCU: React.FC<HotspotCUProps> = ({
             </div>
 
             <div className="mb-4">
-              <label className="mb-2.5 block font-medium">
-                Select Vibe Type
-              </label>
+              <label className="mb-2.5 block font-medium">Select Vibe Type</label>
               <select
-                {...register("vibeType")}
+                {...register('vibeType')}
                 className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
               >
                 <option value="">Select Vibe Type</option>

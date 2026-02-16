@@ -1,22 +1,17 @@
-import React, { useEffect, useState } from "react";
-import DefaultLayout from "@/layout/DefaultLayout";
-import HotspotCU from "./component/HotspotCU";
-import BreadCrumb from "@/components/common/ui/BreadCrumb";
-import { AgGridReact } from "ag-grid-react";
-import SwitchInput from "@/components/ui/Switch";
-import { FilterHotspotQuery } from "@/components/common/Interfaces/filter.interface";
-import { FilterBar } from "@/components/filters";
-import Pagination from "@/components/common/ui/PaginationFooter";
-import { toast } from "react-toastify";
-import {
-  HotspotAPI,
-  HotspotQuery,
-  HotspotResponse,
-  IPlaceHotspot,
-} from "@/utils/api/hotspot.api";
-import HotspotAction from "./component/HotspotAction";
-import HotspotFilter from "@/components/filters/HotspotFilter";
-import { radDateFormatter } from "@/utils";
+import React, { useEffect, useState } from 'react';
+import DefaultLayout from '@/layout/DefaultLayout';
+import HotspotCU from './component/HotspotCU';
+import BreadCrumb from '@/components/common/ui/BreadCrumb';
+import { AgGridReact } from 'ag-grid-react';
+import SwitchInput from '@/components/ui/Switch';
+import { FilterHotspotQuery } from '@/components/common/Interfaces/filter.interface';
+import { FilterBar } from '@/components/filters';
+import Pagination from '@/components/common/ui/PaginationFooter';
+import { toast } from 'react-toastify';
+import { HotspotAPI, HotspotQuery, HotspotResponse, IPlaceHotspot } from '@/utils/api/hotspot.api';
+import HotspotAction from './component/HotspotAction';
+import HotspotFilter from '@/components/filters/HotspotFilter';
+import { radDateFormatter } from '@/utils';
 
 const HotspotList = () => {
   const [isAddHotspot, setIsAddHotspot] = React.useState<boolean>(false);
@@ -70,7 +65,7 @@ const HotspotList = () => {
         setHotspot(res.result);
       }
     } catch (error) {
-      console.log("error", error);
+      console.log('error', error);
     }
   };
 
@@ -80,22 +75,22 @@ const HotspotList = () => {
 
   const colDefs: any = [
     {
-      field: "googleLocationName",
-      headerName: "Place Name",
+      field: 'googleLocationName',
+      headerName: 'Place Name',
       flex: 1,
       sortable: true,
     },
 
     {
-      field: "neighborhood.name",
-      headerName: "Neighborhood",
+      field: 'neighborhood.name',
+      headerName: 'Neighborhood',
       flex: 1,
       sortable: true,
     },
 
     {
-      field: "isDeal",
-      headerName: "Deal",
+      field: 'isDeal',
+      headerName: 'Deal',
       flex: 1,
       sortable: true,
       cellRenderer: (params: { data: IPlaceHotspot }) => {
@@ -110,23 +105,19 @@ const HotspotList = () => {
     },
 
     {
-      field: "Created Time",
-      headerName: "Created",
+      field: 'Created Time',
+      headerName: 'Created',
       flex: 1,
       sortable: true,
       cellRenderer: (params: { data: IPlaceHotspot }) => {
         const date = params?.data?.createdAt as unknown as Date;
-        return (
-          <div className="flex items-center h-full">
-            {radDateFormatter(date)}
-          </div>
-        );
+        return <div className="flex items-center h-full">{radDateFormatter(date)}</div>;
       },
     },
-    { field: "sharedCount", headerName: "Shared", flex: 1, sortable: true },
+    { field: 'sharedCount', headerName: 'Shared', flex: 1, sortable: true },
     {
-      field: "isActive",
-      headerName: "Status",
+      field: 'isActive',
+      headerName: 'Status',
       flex: 0.5,
       sortable: true,
       cellRenderer: (params: { data: IPlaceHotspot }) => {
@@ -138,7 +129,7 @@ const HotspotList = () => {
             { isActive: newValue },
             params.data.hotspotType,
           ).then(() => {
-            toast.success("Updated Successfully");
+            toast.success('Updated Successfully');
             fetchEvents();
           });
         };
@@ -151,8 +142,8 @@ const HotspotList = () => {
       },
     },
     {
-      field: "isEnabled",
-      headerName: "Actions",
+      field: 'isEnabled',
+      headerName: 'Actions',
       flex: 0.7,
       sortable: true,
       cellRenderer: (params: { data: IPlaceHotspot }) => {
@@ -164,11 +155,7 @@ const HotspotList = () => {
   return (
     <DefaultLayout>
       {isAddHotspot && (
-        <HotspotCU
-          isOpen={isAddHotspot}
-          toggleModal={toggleModal}
-          fetchLatestData={fetchEvents}
-        />
+        <HotspotCU isOpen={isAddHotspot} toggleModal={toggleModal} fetchLatestData={fetchEvents} />
       )}
       {isOpenFilter && (
         <HotspotFilter
@@ -209,25 +196,16 @@ const HotspotList = () => {
             </button>
           </div>
           {Object.entries(activeFilters).length > 0 && (
-            <FilterBar
-              activeFilters={activeFilters}
-              onFilterCancel={handleFilterCancel}
-            />
+            <FilterBar activeFilters={activeFilters} onFilterCancel={handleFilterCancel} />
           )}
         </div>
 
         <div className="flex gap-4 mb-4">
-          <button className={`px-4 py-2 rounded bg-blue-600 text-white`}>
-            Places
-          </button>
+          <button className={`px-4 py-2 rounded bg-blue-600 text-white`}>Places</button>
         </div>
         <div className="w-full h-full">
           <div className="ag-theme-quartz h-[500px] pb-4">
-            <AgGridReact
-              className="w-full"
-              rowData={hotspot.data.places}
-              columnDefs={colDefs}
-            />
+            <AgGridReact className="w-full" rowData={hotspot.data.places} columnDefs={colDefs} />
           </div>
           <div className="relative z-1 -mt-4">
             {hotspot?.count > 0 && (

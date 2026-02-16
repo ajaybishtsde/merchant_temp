@@ -7,11 +7,7 @@ import { AgGridReact } from 'ag-grid-react';
 import Pagination from '@/components/common/ui/PaginationFooter';
 import PlaceOfferAction from './component/PlaceOfferAction';
 import PlaceOfferCU from './component/PlaceOfferCU';
-import {
-  IPlaceOffer,
-  PlaceOfferAPI,
-  PlaceOfferResponse,
-} from '@/utils/api/place-offer.api';
+import { IPlaceOffer, PlaceOfferAPI, PlaceOfferResponse } from '@/utils/api/place-offer.api';
 
 const PlaceOffer = () => {
   const [isAddPlaceOffer, setIsAddPlaceOffer] = useState<boolean>(false);
@@ -98,12 +94,7 @@ const PlaceOffer = () => {
       flex: 0.5,
       sortable: true,
       cellRenderer: (params: { data: IPlaceOffer }) => {
-        return (
-          <PlaceOfferAction
-            data={params.data}
-            fetchPlaceOffer={fetchPlaceOffer}
-          />
-        );
+        return <PlaceOfferAction data={params.data} fetchPlaceOffer={fetchPlaceOffer} />;
       },
     },
   ];
@@ -132,18 +123,11 @@ const PlaceOffer = () => {
 
         <div className="w-full h-full">
           <div className="ag-theme-quartz h-[500px] pb-4">
-            <AgGridReact
-              className="w-full"
-              rowData={PlaceOffer.data}
-              columnDefs={colDefs}
-            />
+            <AgGridReact className="w-full" rowData={PlaceOffer.data} columnDefs={colDefs} />
           </div>
           <div className="relative z-1 -mt-4">
             {PlaceOffer?.count > 0 && (
-              <Pagination
-                getRequestData={fetchPlaceOffer}
-                total={PlaceOffer.count}
-              />
+              <Pagination getRequestData={fetchPlaceOffer} total={PlaceOffer.count} />
             )}
           </div>
         </div>

@@ -39,16 +39,10 @@ export const AppVersionAPI = {
   delete: (id: number) =>
     handleRequest(api.delete(`/${prefix}/${id}`, createAuthorizationHeader())),
   update: (id: number, updateReason: FormData | Partial<NewAppVersion>) =>
-    handleRequest(
-      api.patch(`/${prefix}/${id}`, updateReason, createAuthorizationHeader()),
-    ),
+    handleRequest(api.patch(`/${prefix}/${id}`, updateReason, createAuthorizationHeader())),
   updateStatus: (id: number, status: boolean) => {
     return handleRequest(
-      api.patch(
-        `/${prefix}/${id}`,
-        { isActive: status },
-        createAuthorizationHeader(),
-      ),
+      api.patch(`/${prefix}/${id}`, { isActive: status }, createAuthorizationHeader()),
     );
   },
 };

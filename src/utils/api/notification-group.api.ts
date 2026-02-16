@@ -23,22 +23,14 @@ export const NotificationGroupAPI = {
   create: (data: NewNotificationGroup) =>
     handleRequest(api.post(`/${prefix}`, data, createAuthorizationHeader())),
   getAll: (query?: any) =>
-    handleRequest(
-      api.get(`/${prefix}`, { params: query, ...createAuthorizationHeader() }),
-    ),
+    handleRequest(api.get(`/${prefix}`, { params: query, ...createAuthorizationHeader() })),
   delete: (id: number) =>
     handleRequest(api.delete(`/${prefix}/${id}`, createAuthorizationHeader())),
   update: (id: number, updateReason: Partial<NewNotificationGroup>) =>
-    handleRequest(
-      api.patch(`/${prefix}/${id}`, updateReason, createAuthorizationHeader()),
-    ),
+    handleRequest(api.patch(`/${prefix}/${id}`, updateReason, createAuthorizationHeader())),
   updateStatus: (id: number, status: boolean) => {
     return handleRequest(
-      api.patch(
-        `/${prefix}/${id}`,
-        { isActive: status },
-        createAuthorizationHeader(),
-      ),
+      api.patch(`/${prefix}/${id}`, { isActive: status }, createAuthorizationHeader()),
     );
   },
 };

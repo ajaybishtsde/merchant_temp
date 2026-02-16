@@ -16,8 +16,5 @@ export interface BlockResponse {
 }
 
 export const BlockAPI = {
-  getAll: () =>
-    handleRequest(
-      api.get(`/${prefix}/all`, { ...createAuthorizationHeader() }),
-    ),
+  getAll: () => handleRequest(api.get(`/${prefix}/all`, { ...createAuthorizationHeader() })),
 };

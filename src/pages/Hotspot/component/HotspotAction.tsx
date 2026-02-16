@@ -3,11 +3,7 @@ import { MdDelete, MdModeEdit, MdRemoveRedEye } from 'react-icons/md';
 import DeleteAlertModel from '@/components/common/model/DeleteAlertModel';
 import HotspotCU from './HotspotCU';
 import { toast } from 'react-toastify';
-import {
-  HotspotAPI,
-  IEventHotspot,
-  IPlaceHotspot,
-} from '@/utils/api/hotspot.api';
+import { HotspotAPI, IEventHotspot, IPlaceHotspot } from '@/utils/api/hotspot.api';
 import ViewGuestList from '@/components/common/model/viewGuestList';
 
 interface HotspotActionProps {
@@ -16,11 +12,7 @@ interface HotspotActionProps {
   selectedTab: 'place' | 'event';
 }
 
-const HotspotAction: React.FC<HotspotActionProps> = ({
-  data,
-  fetchEvents,
-  selectedTab,
-}) => {
+const HotspotAction: React.FC<HotspotActionProps> = ({ data, fetchEvents, selectedTab }) => {
   const [isDeleteUser, setIsDeleteUser] = useState<boolean>(false);
   const [isForEdit, setIsForEdit] = useState<boolean>(false);
   const [isViewEnabled, setIsViewEnabled] = useState(false);
@@ -60,11 +52,7 @@ const HotspotAction: React.FC<HotspotActionProps> = ({
         />
       )}
       {isViewEnabled && (
-        <ViewGuestList
-          isOpen={isViewEnabled}
-          toggleModal={toggleViewModal}
-          eventId={data?.id}
-        />
+        <ViewGuestList isOpen={isViewEnabled} toggleModal={toggleViewModal} eventId={data?.id} />
       )}
       <div className="flex gap-x-3 whitespace-nowrap capitalize mt-1 ">
         {selectedTab === 'event' && (

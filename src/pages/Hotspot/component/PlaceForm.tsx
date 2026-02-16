@@ -1,12 +1,6 @@
-import {
-  FoodCategoryAPI,
-  FoodCategoryResponse,
-} from '@/utils/api/foodCategory.api';
+import { FoodCategoryAPI, FoodCategoryResponse } from '@/utils/api/foodCategory.api';
 import { IPlaceHotspot, NewPlaceHotspot } from '@/utils/api/hotspot.api';
-import {
-  PlaceCategoryAPI,
-  PlaceCategoryResponse,
-} from '@/utils/api/placeCategory.api';
+import { PlaceCategoryAPI, PlaceCategoryResponse } from '@/utils/api/placeCategory.api';
 import { IUser, UserAPI } from '@/utils/api/user.api';
 import React, { useEffect, useState } from 'react';
 import {
@@ -65,9 +59,10 @@ const PlaceForm = ({
   setImageError,
   control,
 }: PlaceFormProps) => {
-  const [placeCategories, setPlaceCategories] = useState<PlaceCategoryResponse>(
-    { count: 0, data: [] },
-  );
+  const [placeCategories, setPlaceCategories] = useState<PlaceCategoryResponse>({
+    count: 0,
+    data: [],
+  });
   const [foodCategories, setFoodCategories] = useState<FoodCategoryResponse>({
     count: 0,
     data: [],
@@ -225,9 +220,7 @@ const PlaceForm = ({
             onChange={handleImageChange}
             className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-100"
           />
-          {imageError && (
-            <p className="text-red-500 text-sm mt-2">{imageError}</p>
-          )}
+          {imageError && <p className="text-red-500 text-sm mt-2">{imageError}</p>}
         </div>
 
         {defaultOpeningHours.map((item, index) => {
@@ -239,20 +232,16 @@ const PlaceForm = ({
                   type="checkbox"
                   {...register(`placeOpeningHours.${index}.enabled`)}
                   onChange={(e) =>
-                    setValue(
-                      `placeOpeningHours.${index}.enabled`,
-                      e.target.checked,
-                      { shouldValidate: true },
-                    )
+                    setValue(`placeOpeningHours.${index}.enabled`, e.target.checked, {
+                      shouldValidate: true,
+                    })
                   }
                 />
                 <label className="text-sm">Open on {item.day}?</label>
               </div>
               {isEnabled && (
                 <div>
-                  <label className="mb-2.5 block">
-                    Opening Hours for {item.day}
-                  </label>
+                  <label className="mb-2.5 block">Opening Hours for {item.day}</label>
                   <div className="flex gap-4">
                     <input
                       type="time"
@@ -260,11 +249,9 @@ const PlaceForm = ({
                         required: 'Opening time is required',
                       })}
                       onChange={(e) =>
-                        setValue(
-                          `placeOpeningHours.${index}.open`,
-                          e.target.value,
-                          { shouldValidate: true },
-                        )
+                        setValue(`placeOpeningHours.${index}.open`, e.target.value, {
+                          shouldValidate: true,
+                        })
                       }
                       className="w-full rounded-lg border border-stroke bg-transparent py-2 px-4 text-black outline-none dark:border-form-strokedark dark:bg-form-input dark:text-white"
                     />
@@ -274,11 +261,9 @@ const PlaceForm = ({
                         required: 'Closing time is required',
                       })}
                       onChange={(e) =>
-                        setValue(
-                          `placeOpeningHours.${index}.close`,
-                          e.target.value,
-                          { shouldValidate: true },
-                        )
+                        setValue(`placeOpeningHours.${index}.close`, e.target.value, {
+                          shouldValidate: true,
+                        })
                       }
                       className="w-full rounded-lg border border-stroke bg-transparent py-2 px-4 text-black outline-none dark:border-form-strokedark dark:bg-form-input dark:text-white"
                     />
@@ -313,9 +298,7 @@ const PlaceForm = ({
             className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
           />
           {errors['dealDescription' as keyof NewPlaceHotspot] && (
-            <div className="text-sm text-red-600">
-              Deal Description is required
-            </div>
+            <div className="text-sm text-red-600">Deal Description is required</div>
           )}
         </div>
       )}

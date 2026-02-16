@@ -23,7 +23,5 @@ export interface ReportQuery {
 
 export const ReportAPI = {
   getAll: (query?: ReportQuery) =>
-    handleRequest(
-      api.get(`/${prefix}`, { params: query, ...createAuthorizationHeader() }),
-    ),
+    handleRequest(api.get(`/${prefix}`, { params: query, ...createAuthorizationHeader() })),
 };
