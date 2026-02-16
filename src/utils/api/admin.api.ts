@@ -1,8 +1,8 @@
 import { api, createAuthorizationHeader, handleRequest } from '.';
 
-const prefix: string = '/admin';
+const prefix: string = '/merchant';
 
-export interface IAdmin {
+export interface Merchant {
   id: number;
   email: string;
   firstName: string;
@@ -15,27 +15,25 @@ export interface IAdmin {
 }
 
 export interface AdminResponse {
-  data: IAdmin[];
+  data: Merchant[];
   count: number;
 }
 
-export interface CurrentUser extends IAdmin {
+export interface CurrentUser extends Merchant {
   token: string;
 }
 
-export interface AdminLogin {
+export interface MerchantLogin {
   email: string;
   password: string;
 }
 
-export interface NewAdmin {
-  firstName: string;
-  lastName: string;
+export interface NewMerchant {
   email: string;
-  phoneNumber: string;
-  dob: string;
   password: string;
-  isActive?: boolean;
+  company_name: string;
+  contact_person: string;
+  documents?: FileList;
 }
 
 export interface AdminQuery {
@@ -44,11 +42,20 @@ export interface AdminQuery {
 }
 
 export const AdminAPI = {
-  login: (login: AdminLogin) => handleRequest(api.post(`${prefix}/login`, login)),
-  addNew: (newAdminData: NewAdmin) =>
-    handleRequest(api.post(`${prefix}`, newAdminData, createAuthorizationHeader())),
-
-  update: (id: number, update: Partial<NewAdmin>) =>
+  login: (login: MerchantLogin) => handleRequest(api.post(`${prefix}/auth/login`, login)),
+  addNew: (newMerchantData: FormData) =>
+    handleRequest(
+      api.post(`${prefix}/auth/register`, newMerchantData, createAuthorizationHeader()),
+    ),
+  verifyEmailOtp: (data: { email: string; otp: string }) =>
+    handleRequest(api.post(`${prefix}/verify/email`, data, createAuthorizationHeader())),
+  resendOtp: (data: { email: string }) =>
+    handleRequest(api.post(`${prefix}/verify/resend-otp`, data, createAuthorizationHeader())),
+  forgotPassword: (data: { email: string }) =>
+    handleRequest(api.post(`${prefix}/password/forgot`, data, createAuthorizationHeader())),
+  resetPassword: (data: { email: string; otp: string; password: string }) =>
+    handleRequest(api.post(`${prefix}/password/reset`, data, createAuthorizationHeader())),
+  update: (id: number, update: Partial<NewMerchant>) =>
     handleRequest(api.patch(`${prefix}/${id}`, update, createAuthorizationHeader())),
 
   getAll: (query?: any) => {

@@ -154,7 +154,7 @@ const HotspotCU: React.FC<HotspotCUProps> = ({
       const form = new FormData();
 
       form.append('neighborhoodId', String(formData.neighborhoodId));
-      form.append('hotspotType', updateData?.hotspotType || formData.hotspotType || hotspotType);
+      form.append('hotspotType', 'place');
 
       if (!updateData) {
         form.append('googleLatitude', String(place?.location.latitude));

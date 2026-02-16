@@ -85,10 +85,7 @@ const PlaceOfferCU: React.FC<PlaceOfferCUProps> = ({
             <div className="mb-4">
               <label className="mb-2.5 block font-medium">Place</label>
               <select
-                {...register('place_id', {
-                  required: true,
-                  valueAsNumber: true,
-                })}
+                {...register('place_id', { required: true, valueAsNumber: true })}
                 className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white"
               >
                 <option value="">Select Place</option>

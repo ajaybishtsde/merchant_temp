@@ -30,9 +30,15 @@ import State from '@/pages/State';
 import City from '@/pages/City';
 import UserProfile from '@/pages/UserProfile';
 import PlaceOffer from '@/pages/PlaceOffer';
+import SignUp from '@/pages/Authentication/SignUp';
+import OTPVerify from '@/pages/Authentication/verifyOtp';
+import ForgotPassword from '@/pages/Authentication/forgotPassword';
 
 export const publicRoutes = [
   { path: '/auth/login', element: <SignIn /> },
+  { path: '/auth/signup', element: <SignUp /> },
+  { path: '/auth/veriyotp', element: <OTPVerify /> },
+  { path: '/auth/forgot-password', element: <ForgotPassword /> },
   { path: '*', element: <NotFound /> },
 ];
 

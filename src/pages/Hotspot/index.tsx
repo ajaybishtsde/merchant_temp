@@ -17,7 +17,7 @@ const HotspotList = () => {
   const [isAddHotspot, setIsAddHotspot] = React.useState<boolean>(false);
   const [hotspot, setHotspot] = useState<HotspotResponse>({
     count: 0,
-    data: { places: [] },
+    data: [],
   });
   const [isOpenFilter, setIsOpenFilter] = useState<boolean>(false);
   const [filter, setFilter] = useState<FilterHotspotQuery>({});
@@ -38,12 +38,12 @@ const HotspotList = () => {
   const handleClearFilter = () => {
     setFilter({});
     setActiveFilters({});
-    fetchEvents({});
+    fetchPlace({});
   };
 
   const filterData = async () => {
     setActiveFilters(filter);
-    await fetchEvents(filter);
+    await fetchPlace(filter);
   };
 
   const handleFilterCancel = async (filterKey: string) => {
@@ -51,14 +51,14 @@ const HotspotList = () => {
     delete updatedFilters[filterKey];
     setActiveFilters(updatedFilters);
     setFilter(updatedFilters);
-    await fetchEvents(updatedFilters);
+    await fetchPlace(updatedFilters);
   };
 
   const toggleModal = () => {
     setIsAddHotspot(!isAddHotspot);
   };
 
-  const fetchEvents = async (query?: HotspotQuery) => {
+  const fetchPlace = async (query?: HotspotQuery) => {
     try {
       const res = await HotspotAPI.getAll(query);
       if (res.status) {
@@ -70,7 +70,7 @@ const HotspotList = () => {
   };
 
   useEffect(() => {
-    fetchEvents();
+    fetchPlace();
   }, []);
 
   const colDefs: any = [
@@ -116,8 +116,14 @@ const HotspotList = () => {
     },
     { field: 'sharedCount', headerName: 'Shared', flex: 1, sortable: true },
     {
-      field: 'isActive',
+      field: 'status',
       headerName: 'Status',
+      flex: 1,
+      sortable: true,
+    },
+    {
+      field: 'isActive',
+      headerName: 'Is active',
       flex: 0.5,
       sortable: true,
       cellRenderer: (params: { data: IPlaceHotspot }) => {
@@ -130,7 +136,7 @@ const HotspotList = () => {
             params.data.hotspotType,
           ).then(() => {
             toast.success('Updated Successfully');
-            fetchEvents();
+            fetchPlace();
           });
         };
 
@@ -147,7 +153,7 @@ const HotspotList = () => {
       flex: 0.7,
       sortable: true,
       cellRenderer: (params: { data: IPlaceHotspot }) => {
-        return <HotspotAction data={params.data} fetchEvents={fetchEvents} />;
+        return <HotspotAction data={params.data} fetchPlace={fetchPlace} />;
       },
     },
   ];
@@ -155,7 +161,7 @@ const HotspotList = () => {
   return (
     <DefaultLayout>
       {isAddHotspot && (
-        <HotspotCU isOpen={isAddHotspot} toggleModal={toggleModal} fetchLatestData={fetchEvents} />
+        <HotspotCU isOpen={isAddHotspot} toggleModal={toggleModal} fetchLatestData={fetchPlace} />
       )}
       {isOpenFilter && (
         <HotspotFilter
@@ -205,12 +211,10 @@ const HotspotList = () => {
         </div>
         <div className="w-full h-full">
           <div className="ag-theme-quartz h-[500px] pb-4">
-            <AgGridReact className="w-full" rowData={hotspot.data.places} columnDefs={colDefs} />
+            <AgGridReact className="w-full" rowData={hotspot?.data} columnDefs={colDefs} />
           </div>
           <div className="relative z-1 -mt-4">
-            {hotspot?.count > 0 && (
-              <Pagination getRequestData={fetchEvents} total={hotspot.count} />
-            )}
+            {hotspot?.count > 0 && <Pagination getRequestData={fetchPlace} total={hotspot.count} />}
           </div>
         </div>
       </div>

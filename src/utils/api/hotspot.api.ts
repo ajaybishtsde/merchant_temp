@@ -36,7 +36,7 @@ export interface IPlaceHotspot extends MongoResponse {
 }
 
 export interface HotspotResponse {
-  data: { places: IPlaceHotspot[] };
+  data: IPlaceHotspot[];
   count: number;
 }
 
@@ -47,12 +47,6 @@ export interface NewHotspot {
   googleLocationName: string;
   googlePlaceId: string;
   googlePlaceAddress: string;
-  // googlePlacePhone: string;
-  // googlePlaceWebsite: string;
-  // googlePlaceRating: string;
-  // googlePlaceReviews: string;
-  // googlePlaceOpeningHours: string;
-  // googlePlaceTypes: string;
   priceRange?: number;
   vibeType?: number;
   image: File;
@@ -81,7 +75,9 @@ export const HotspotAPI = {
   create: (data: FormData) =>
     handleRequest(api.post(`/${prefix}`, data, createAuthorizationFormDataHeader())),
   getAll: (query?: HotspotQuery) =>
-    handleRequest(api.get(`/${prefix}`, { params: query, ...createAuthorizationHeader() })),
+    handleRequest(
+      api.get(`/${prefix}/places/all`, { params: query, ...createAuthorizationHeader() }),
+    ),
   delete: (id: number, query: { type: string }) =>
     handleRequest(
       api.delete(`/${prefix}/${id}`, {

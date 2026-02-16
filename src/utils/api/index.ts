@@ -5,7 +5,7 @@ import { CurrentUser } from './admin.api';
 const API_BASE_URL = `${server_url}`;
 
 export const api = axios.create({
-  baseURL: 'http://localhost:3001/api',
+  baseURL: `${API_BASE_URL}/api`,
 });
 
 const getToken = () => {

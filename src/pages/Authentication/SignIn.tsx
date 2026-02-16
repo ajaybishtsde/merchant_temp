@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import PhoneMockUp from '@/static/images/logo/logoPurple.svg';
 import Frame from '@/static/images/cover/Frame.svg';
 import { TfiEmail } from 'react-icons/tfi';
@@ -7,7 +7,7 @@ import { useCurrentUser } from '@/context/userContext';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
-import { AdminAPI, AdminLogin } from '@/utils/api/admin.api';
+import { AdminAPI, MerchantLogin } from '@/utils/api/admin.api';
 
 const SignIn: React.FC = () => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const SignIn: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<AdminLogin>();
+  } = useForm<MerchantLogin>();
 
   React.useEffect(() => {
     if (currentUser && currentUser.token) {
@@ -25,11 +25,11 @@ const SignIn: React.FC = () => {
     }
   }, [currentUser, navigate]);
 
-  const onSubmit = async (data: AdminLogin) => {
+  const onSubmit = async (data: MerchantLogin) => {
     try {
       const res = await AdminAPI.login(data);
       console.log('res', res);
-      if (res) {
+      if (res.status) {
         toast.success('user logged-in successfully', {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
@@ -64,7 +64,7 @@ const SignIn: React.FC = () => {
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                Sign In to Admin
+                Sign In
               </h2>
 
               <form onSubmit={handleSubmit(onSubmit)}>
@@ -89,7 +89,7 @@ const SignIn: React.FC = () => {
 
                 <div className="mb-6">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Re-type Password
+                    Password
                   </label>
                   <div className="relative">
                     <input
@@ -106,6 +106,14 @@ const SignIn: React.FC = () => {
                       {isPassword ? <BsEye /> : <BsEyeSlash />}
                     </span>
                   </div>
+                  <div className="mb-5 text-right">
+                    <p
+                      onClick={() => navigate('/auth/forgot-password')}
+                      className="text-sm text-primary cursor-pointer hover:underline"
+                    >
+                      Forgot Password?
+                    </p>
+                  </div>
                   {errors.password && (
                     <div className="text-sm text-red-600">Password is required</div>
                   )}
@@ -117,6 +125,14 @@ const SignIn: React.FC = () => {
                     value="Sign In"
                     className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
                   />
+                </div>
+                <div className="mt-4 text-center">
+                  <p className="text-sm">
+                    Don’t have an account?{' '}
+                    <Link to="/auth/signup" className="text-primary font-medium hover:underline">
+                      Sign Up
+                    </Link>
+                  </p>
                 </div>
               </form>
             </div>

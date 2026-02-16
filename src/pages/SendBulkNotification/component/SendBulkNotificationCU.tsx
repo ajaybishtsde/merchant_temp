@@ -48,7 +48,7 @@ const SendBulkNotificationCU: React.FC<SendBulkNotificationCUProps> = ({
   const [isStored, setIsStored] = useState(false);
   const [hotspots, setHotspots] = useState<HotspotResponse>({
     count: 0,
-    data: { places: [], events: [] },
+    data: [],
   });
 
   const fetchAllUsers = async () => {

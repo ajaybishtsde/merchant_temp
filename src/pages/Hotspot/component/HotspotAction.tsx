@@ -1,21 +1,17 @@
 import React, { useState } from 'react';
-import { MdDelete, MdModeEdit, MdRemoveRedEye } from 'react-icons/md';
+import { MdDelete, MdModeEdit } from 'react-icons/md';
 import DeleteAlertModel from '@/components/common/model/DeleteAlertModel';
 import HotspotCU from './HotspotCU';
 import { toast } from 'react-toastify';
-import { HotspotAPI, IEventHotspot, IPlaceHotspot } from '@/utils/api/hotspot.api';
-import ViewGuestList from '@/components/common/model/viewGuestList';
-
+import { HotspotAPI, IPlaceHotspot } from '@/utils/api/hotspot.api';
 interface HotspotActionProps {
-  data: IEventHotspot | IPlaceHotspot;
-  fetchEvents: () => void;
-  selectedTab: 'place' | 'event';
+  data: IPlaceHotspot;
+  fetchPlace: () => void;
 }
 
-const HotspotAction: React.FC<HotspotActionProps> = ({ data, fetchEvents, selectedTab }) => {
+const HotspotAction: React.FC<HotspotActionProps> = ({ data, fetchPlace }) => {
   const [isDeleteUser, setIsDeleteUser] = useState<boolean>(false);
   const [isForEdit, setIsForEdit] = useState<boolean>(false);
-  const [isViewEnabled, setIsViewEnabled] = useState(false);
   const toggleEditModel = () => {
     setIsForEdit(!isForEdit);
   };
@@ -26,13 +22,11 @@ const HotspotAction: React.FC<HotspotActionProps> = ({ data, fetchEvents, select
   const handleDeleteNeighbor = () => {
     HotspotAPI.delete(data.id, { type: data.hotspotType }).then(() => {
       toast.success('Deleted Successfully');
-      fetchEvents();
+      fetchPlace();
       setIsDeleteUser(false);
     });
   };
 
-  const toggleViewModal = () => setIsViewEnabled(!isViewEnabled);
-  console.log('>>>>>>>>>>>>>', isViewEnabled);
   return (
     <div>
       {isDeleteUser && (
@@ -47,22 +41,11 @@ const HotspotAction: React.FC<HotspotActionProps> = ({ data, fetchEvents, select
         <HotspotCU
           isOpen={isForEdit}
           toggleModal={toggleEditModel}
-          fetchLatestData={fetchEvents}
+          fetchLatestData={fetchPlace}
           updateData={data}
         />
       )}
-      {isViewEnabled && (
-        <ViewGuestList isOpen={isViewEnabled} toggleModal={toggleViewModal} eventId={data?.id} />
-      )}
       <div className="flex gap-x-3 whitespace-nowrap capitalize mt-1 ">
-        {selectedTab === 'event' && (
-          <button
-            className="bg-gray-500 hover:bg-gray-700 font-bold rounded bg-blue-600 text-white p-1"
-            onClick={toggleViewModal}
-          >
-            <MdRemoveRedEye className="text-xl" />
-          </button>
-        )}
         <button
           className="bg-gray-500 hover:bg-gray-700 font-bold rounded bg-blue-600 text-white p-1"
           onClick={toggleEditModel}

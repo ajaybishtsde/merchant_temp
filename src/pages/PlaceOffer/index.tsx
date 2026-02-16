@@ -37,39 +37,15 @@ const PlaceOffer = () => {
   }, []);
 
   const colDefs: any = [
-    {
-      field: 'place.googleLocationName',
-      headerName: 'place',
-      flex: 1,
-      sortable: true,
-    },
-    {
-      field: 'redeem_code',
-      headerName: 'Redeem Code',
-      flex: 1,
-      sortable: true,
-    },
-    {
-      field: 'description',
-      headerName: 'description',
-      flex: 1,
-      sortable: true,
-    },
-    {
-      field: 'created_by_type',
-      headerName: 'Created By',
-      flex: 1,
-      sortable: true,
-    },
-    {
-      field: 'updated_by_type',
-      headerName: 'Updated By',
-      flex: 1,
-      sortable: true,
-    },
+    { field: 'place.googleLocationName', headerName: 'place', flex: 1, sortable: true },
+    { field: 'redeem_code', headerName: 'Redeem Code', flex: 1, sortable: true },
+    { field: 'description', headerName: 'description', flex: 1, sortable: true },
+    { field: 'created_by_type', headerName: 'Created By', flex: 1, sortable: true },
+    { field: 'updated_by_type', headerName: 'Updated By', flex: 1, sortable: true },
+    { field: 'status', headerName: 'Status', flex: 1, sortable: true },
     {
       field: 'is_active',
-      headerName: 'Status',
+      headerName: 'Is active',
       flex: 0.5,
       sortable: true,
       cellRenderer: (params: { data: IPlaceOffer }) => {

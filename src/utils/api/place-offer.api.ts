@@ -45,10 +45,10 @@ export const PlaceOfferAPI = {
   create: (data: NewPlaceOffer) =>
     handleRequest(api.post(`/${prefix}`, data, createAuthorizationHeader())),
   getAll: (query?: Query) =>
-    handleRequest(api.get(`/${prefix}`, { params: query, ...createAuthorizationHeader() })),
+    handleRequest(api.get(`/${prefix}/all`, { params: query, ...createAuthorizationHeader() })),
   getAllPlaces: (query?: Query) =>
     handleRequest(
-      api.get(`/hotspot/all-places`, {
+      api.get(`/hotspot/places/all`, {
         params: query,
         ...createAuthorizationHeader(),
       }),
