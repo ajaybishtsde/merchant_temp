@@ -100,15 +100,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         <div className="py-3 flex border-b w-full border-slate-600 pl-6">
           <DarkModeSwitcher />
         </div>
-        <div className="">
-          <button
-            className="flex gap-9 py-2 font-medium duration-300 ease-in-out hover:text-blue-200 pl-6 "
-            onClick={() => logOutUser()}
-          >
-            <CiLogout className="text-2xl" />
-            Log Out
-          </button>
-        </div>
       </div>
     </aside>
   );

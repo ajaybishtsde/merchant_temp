@@ -22,7 +22,7 @@ import AdminMessage from '@/pages/AdminMessage';
 import NotificationGroup from '@/pages/NotificationGroup';
 import SendBulkNotification from '@/pages/SendBulkNotification';
 import BlockList from '@/pages/BlockedUsers';
-import SystemSetting from '@/pages/SystemSetting';
+import ProfileSetting from '@/pages/ProfileSetting';
 import AppVersion from '@/pages/AppVersion';
 import WaitList from '@/pages/Waitlist';
 import Country from '@/pages/Country';
@@ -33,6 +33,7 @@ import PlaceOffer from '@/pages/PlaceOffer';
 import SignUp from '@/pages/Authentication/SignUp';
 import OTPVerify from '@/pages/Authentication/verifyOtp';
 import ForgotPassword from '@/pages/Authentication/forgotPassword';
+import AccountSettings from '@/pages/accountSettings';
 
 export const publicRoutes = [
   { path: '/auth/login', element: <SignIn /> },
@@ -49,7 +50,8 @@ export const privateRoutes = [
   { path: '/admin', element: <Admin /> },
   { path: '/reported-user', element: <Report /> },
   { path: '/blocked-user', element: <BlockList /> },
-  { path: '/system-setting', element: <SystemSetting /> },
+  { path: '/profile-setting', element: <ProfileSetting /> },
+  { path: '/account-setting', element: <AccountSettings /> },
   { path: 'neighborhood', element: <NeighborhoodList /> },
   { path: '/experiences', element: <HotspotList /> },
   { path: '/interests', element: <InterestList /> },

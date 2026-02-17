@@ -57,7 +57,8 @@ export const AdminAPI = {
     handleRequest(api.post(`${prefix}/password/reset`, data, createAuthorizationHeader())),
   update: (id: number, update: Partial<NewMerchant>) =>
     handleRequest(api.patch(`${prefix}/${id}`, update, createAuthorizationHeader())),
-
+  changePassword: (data: { currentPassword: string; newPassword: string }) =>
+    handleRequest(api.post(`${prefix}/password/change`, data, createAuthorizationHeader())),
   getAll: (query?: any) => {
     return handleRequest(api.get('/admin', { params: query, ...createAuthorizationHeader() }));
   },
