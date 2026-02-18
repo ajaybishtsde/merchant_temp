@@ -8,15 +8,17 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
 import { AdminAPI, MerchantLogin } from '@/utils/api/admin.api';
+import LoadingButton from '@/components/common/LoadingButton';
 
 const SignIn: React.FC = () => {
   const navigate = useNavigate();
   const [isPassword, setIsPassword] = React.useState<boolean>(true);
   const { currentUser, setCurrentUser } = useCurrentUser();
+
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<MerchantLogin>();
 
   React.useEffect(() => {
@@ -26,14 +28,17 @@ const SignIn: React.FC = () => {
   }, [currentUser, navigate]);
 
   const onSubmit = async (data: MerchantLogin) => {
+    if (isSubmitting) return;
+
     try {
       const res = await AdminAPI.login(data);
-      console.log('res', res);
+
       if (res.status) {
         toast.success('user logged-in successfully', {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+
         localStorage.setItem('admin', JSON.stringify(res.result));
         setCurrentUser(res.result);
         navigate('/dashboard');
@@ -120,11 +125,13 @@ const SignIn: React.FC = () => {
                 </div>
 
                 <div className="mb-5">
-                  <input
+                  <LoadingButton
                     type="submit"
-                    value="Sign In"
-                    className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
-                  />
+                    loading={isSubmitting}
+                    className="w-full rounded-lg bg-primary text-white p-4"
+                  >
+                    {isSubmitting ? 'Signing in...' : 'Sign In'}
+                  </LoadingButton>
                 </div>
                 <div className="mt-4 text-center">
                   <p className="text-sm">

@@ -13,7 +13,7 @@ import HotspotAction from './component/HotspotAction';
 import HotspotFilter from '@/components/filters/HotspotFilter';
 import { radDateFormatter } from '@/utils';
 
-const HotspotList = () => {
+const Places = () => {
   const [isAddHotspot, setIsAddHotspot] = React.useState<boolean>(false);
   const [hotspot, setHotspot] = useState<HotspotResponse>({
     count: 0,
@@ -222,4 +222,4 @@ const HotspotList = () => {
   );
 };
 
-export default HotspotList;
+export default Places;

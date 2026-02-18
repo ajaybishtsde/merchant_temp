@@ -5,6 +5,7 @@ import { TfiEmail } from 'react-icons/tfi';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { AdminAPI } from '@/utils/api/admin.api';
+import LoadingButton from '@/components/common/LoadingButton';
 
 interface EmailForm {
   email: string;
@@ -28,7 +29,7 @@ const ForgotPassword: React.FC = () => {
   const {
     register: registerEmail,
     handleSubmit: handleEmailSubmit,
-    formState: { errors: emailErrors },
+    formState: { errors: emailErrors, isSubmitting },
   } = useForm<EmailForm>();
 
   // reset form
@@ -36,7 +37,7 @@ const ForgotPassword: React.FC = () => {
     register,
     handleSubmit,
     watch,
-    formState: { errors },
+    formState: { errors, isSubmitting: isResetSubmitting },
   } = useForm<ResetForm>();
 
   const password = watch('password');
@@ -82,7 +83,6 @@ const ForgotPassword: React.FC = () => {
             {step === 1 ? 'Forgot Password' : 'Verify OTP & Reset Password'}
           </h2>
 
-          {/* ---------------- STEP 1: EMAIL ---------------- */}
           {step === 1 && (
             <form onSubmit={handleEmailSubmit(onSendOtp)}>
               <div className="mb-6">
@@ -105,9 +105,13 @@ const ForgotPassword: React.FC = () => {
                 )}
               </div>
 
-              <button type="submit" className="w-full rounded-lg bg-primary p-4 text-white">
-                Send OTP
-              </button>
+              <LoadingButton
+                type="submit"
+                loading={isSubmitting}
+                className="w-full rounded-lg bg-primary p-4 text-white"
+              >
+                {isSubmitting ? 'Sending...' : 'Send OTP'}
+              </LoadingButton>
             </form>
           )}
 
@@ -186,9 +190,13 @@ const ForgotPassword: React.FC = () => {
                 )}
               </div>
 
-              <button type="submit" className="w-full rounded-lg bg-primary p-4 text-white">
-                Reset Password
-              </button>
+              <LoadingButton
+                type="submit"
+                loading={isResetSubmitting}
+                className="w-full rounded-lg bg-primary p-4 text-white"
+              >
+                {isResetSubmitting ? 'Resetting...' : 'Reset Password'}
+              </LoadingButton>
             </form>
           )}
         </div>

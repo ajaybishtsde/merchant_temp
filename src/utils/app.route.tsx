@@ -10,7 +10,7 @@ import RomanceType from '@/pages/RomanceType';
 import GenderType from '@/pages/GenderType';
 import OrientationType from '@/pages/OrientationType';
 import PronounsType from '@/pages/PronoundType';
-import HotspotList from '@/pages/Hotspot';
+import Places from '@/pages/Places';
 import Report from '@/pages/Report';
 import EventType from '@/pages/EventType';
 import VibeType from '@/pages/VibeType';
@@ -53,7 +53,7 @@ export const privateRoutes = [
   { path: '/profile-setting', element: <ProfileSetting /> },
   { path: '/account-setting', element: <AccountSettings /> },
   { path: 'neighborhood', element: <NeighborhoodList /> },
-  { path: '/experiences', element: <HotspotList /> },
+  { path: '/places', element: <Places /> },
   { path: '/interests', element: <InterestList /> },
   { path: '/open-to-options', element: <OpenTo /> },
   { path: '/romance-type', element: <RomanceType /> },

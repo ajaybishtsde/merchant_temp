@@ -12,9 +12,9 @@ export const links = [
   },
 
   {
-    title: 'Experiences',
-    path: '/experiences',
-    pathnameInclude: 'experiences',
+    title: 'Places',
+    path: '/places',
+    pathnameInclude: 'places',
     icon: <MdPlace className="text-xl" />,
   },
   {

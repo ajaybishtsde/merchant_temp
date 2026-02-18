@@ -1,4 +1,9 @@
-import { api, createAuthorizationHeader, handleRequest } from '.';
+import {
+  api,
+  createAuthorizationFormDataHeader,
+  createAuthorizationHeader,
+  handleRequest,
+} from '.';
 
 const prefix: string = '/merchant';
 
@@ -59,10 +64,14 @@ export const AdminAPI = {
     handleRequest(api.patch(`${prefix}/${id}`, update, createAuthorizationHeader())),
   changePassword: (data: { currentPassword: string; newPassword: string }) =>
     handleRequest(api.post(`${prefix}/password/change`, data, createAuthorizationHeader())),
+  getProfile: () => handleRequest(api.get(`${prefix}/profile`, createAuthorizationHeader())),
   getAll: (query?: any) => {
     return handleRequest(api.get('/admin', { params: query, ...createAuthorizationHeader() }));
   },
-
+  updateProfile: (newMerchantData: FormData) =>
+    handleRequest(
+      api.post(`${prefix}/auth/register`, newMerchantData, createAuthorizationHeader()),
+    ),
   getAlldata: (query?: AdminQuery) => {
     return handleRequest(
       api.get('/admin-dashboard-data', {
@@ -71,6 +80,25 @@ export const AdminAPI = {
       }),
     );
   },
+  updateLogo: (file: File) => {
+    const formData = new FormData();
+
+    formData.append('logo', file);
+
+    return handleRequest(
+      api.patch(`${prefix}/upload-logo`, formData, createAuthorizationFormDataHeader()),
+    );
+  },
+  updateDocs: (file: File) => {
+    const formData = new FormData();
+
+    formData.append('documents', file);
+
+    return handleRequest(
+      api.patch(`${prefix}/upload-documents`, formData, createAuthorizationFormDataHeader()),
+    );
+  },
+  deleteSelf: () => handleRequest(api.delete(`${prefix}/delete`, createAuthorizationHeader())),
 
   deleteById: (id: number) =>
     handleRequest(api.delete(`${prefix}/${id}`, createAuthorizationHeader())),

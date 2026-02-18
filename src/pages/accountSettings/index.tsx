@@ -1,37 +1,43 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import DefaultLayout from '@/layout/DefaultLayout';
 import BreadCrumb from '@/components/common/ui/BreadCrumb';
 import { toast } from 'react-toastify';
 import { FiLock, FiLogOut, FiTrash2 } from 'react-icons/fi';
 import ChangePasswordModal from './component/ChangePasswordModal';
 import { SettingsCard } from './component/SettingsCard';
+import { useCurrentUser } from '@/context/userContext';
+import { AdminAPI } from '@/utils/api/admin.api';
+import ConfirmDeleteModal from './component/ConfirmDeleteModal';
 
 const AccountSettings = () => {
+  const { logOutUser } = useCurrentUser();
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
-  /* ---------------- DUMMY ACTIONS ---------------- */
+  const handleLogout = () => logOutUser();
 
-  const handleLogout = () => {
-    toast.success('Logged out (dummy)');
-    // TODO → clear token + redirect
-  };
+  const handleDeleteAccount = async () => {
+    try {
+      setDeleteLoading(true);
 
-  const handleDeleteAccount = () => {
-    const confirmDelete = window.confirm(
-      'Are you sure you want to delete your account? This action cannot be undone.',
-    );
+      const res = await AdminAPI.deleteSelf();
 
-    if (!confirmDelete) return;
-
-    toast.success('Account deleted (dummy)');
-    // TODO → call delete API
+      if (res?.status) {
+        toast.success(res.message);
+        logOutUser(); // logout after delete
+      }
+    } catch {
+      toast.error('Failed to delete account');
+    } finally {
+      setDeleteLoading(false);
+      setIsDeleteModalOpen(false);
+    }
   };
 
   const handleUpdatePassword = () => {
     setIsPasswordModalOpen(true);
   };
-
-  /* ---------------- UI ---------------- */
 
   return (
     <DefaultLayout>
@@ -74,7 +80,7 @@ const AccountSettings = () => {
               description="Permanently delete your account and all associated data."
               buttonText="Delete Account"
               danger
-              onClick={handleDeleteAccount}
+              onClick={() => setIsDeleteModalOpen(true)}
             />
           </div>
         </div>
@@ -82,6 +88,12 @@ const AccountSettings = () => {
       <ChangePasswordModal
         isOpen={isPasswordModalOpen}
         onClose={() => setIsPasswordModalOpen(false)}
+      />
+      <ConfirmDeleteModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        onConfirm={handleDeleteAccount}
+        loading={deleteLoading}
       />
     </DefaultLayout>
   );

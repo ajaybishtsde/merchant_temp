@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AdminAPI } from '@/utils/api/admin.api';
+import LoadingButton from '@/components/common/LoadingButton';
 
 interface OTPForm {
   otp: string;
@@ -14,14 +15,15 @@ const OTPVerify: React.FC = () => {
 
   const email = location.state?.email;
 
-  const [timer, setTimer] = React.useState(30);
+  const [timer, setTimer] = React.useState(60);
   const [canResend, setCanResend] = React.useState(false);
   const [resentMessage, setResentMessage] = React.useState('');
+  const [resendLoading, setResendLoading] = React.useState(false);
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<OTPForm>();
 
   // countdown timer
@@ -54,20 +56,26 @@ const OTPVerify: React.FC = () => {
   };
 
   const handleResend = async () => {
-    if (!canResend) return;
+    if (!canResend || resendLoading) return;
 
     try {
+      setResendLoading(true);
+
       const result = await AdminAPI.resendOtp({ email });
 
       if (result?.status) {
         setResentMessage('OTP resent successfully');
         toast.success('OTP resent');
+
         setTimer(30);
         setCanResend(false);
+
         setTimeout(() => setResentMessage(''), 3000);
       }
     } catch (err) {
       toast.error('Failed to resend OTP');
+    } finally {
+      setResendLoading(false);
     }
   };
 
@@ -100,12 +108,13 @@ const OTPVerify: React.FC = () => {
               {errors.otp && <div className="text-sm text-red-600 mt-1">Valid OTP is required</div>}
             </div>
 
-            <button
+            <LoadingButton
               type="submit"
+              loading={isSubmitting}
               className="w-full rounded-lg border border-primary bg-primary p-4 text-white hover:bg-opacity-90"
             >
-              Verify OTP
-            </button>
+              {isSubmitting ? 'Verifying...' : 'Verify OTP'}
+            </LoadingButton>
           </form>
           <div className="text-center mt-4 text-sm">
             {resentMessage && (
@@ -113,13 +122,14 @@ const OTPVerify: React.FC = () => {
             )}
 
             {canResend ? (
-              <button
+              <LoadingButton
                 type="button"
+                loading={resendLoading}
                 onClick={handleResend}
-                className="text-primary font-medium hover:underline"
+                className="w-full text-primary font-medium hover:underline"
               >
-                Resend OTP
-              </button>
+                {resendLoading ? 'Sending...' : 'Resend OTP'}
+              </LoadingButton>
             ) : (
               <p className="text-gray-500 dark:text-gray-400">Resend OTP in {timer}s</p>
             )}

@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
 import { AdminAPI } from '@/utils/api/admin.api';
-// import { MerchantAPI } from '@/utils/api/merchant.api';
+import LoadingButton from '@/components/common/LoadingButton';
 
 interface MerchantRegister {
   email: string;
@@ -24,15 +24,16 @@ const SignUp: React.FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<MerchantRegister>();
 
   const togglePassword = () => setIsPassword(!isPassword);
 
   const onSubmit = async (data: MerchantRegister) => {
+    if (isSubmitting) return;
+
     try {
       const formData = new FormData();
-
       formData.append('email', data.email);
       formData.append('password', data.password);
       formData.append('company_name', data.companyName);
@@ -40,7 +41,7 @@ const SignUp: React.FC = () => {
       // formData.append('documents', data.documents[0]);
 
       const res = await AdminAPI.addNew(formData);
-      console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>merchant', res);
+
       if (res?.status) {
         toast.success('Verification email sent. Please check your inbox.', {
           autoClose: 2000,
@@ -52,6 +53,7 @@ const SignUp: React.FC = () => {
       }
     } catch (error: any) {
       toast.error(error?.message || 'Registration failed');
+    } finally {
     }
   };
 
@@ -138,19 +140,14 @@ const SignUp: React.FC = () => {
                     <p className="text-sm text-red-600">Password must be at least 6 characters</p>
                   )}
                 </div>
-                {/* Document Upload */}
-                {/* <div className="mb-6">
-                  <label className="block mb-2">Upload Documents</label>
-                  <input
-                    type="file"
-                    {...register('documents', { required: true })}
-                    className="w-full"
-                  />
-                  {errors.documents && <p className="text-sm text-red-600">Document is required</p>}
-                </div> */}
-                <button type="submit" className="w-full rounded-lg bg-primary text-white p-4">
-                  Create Merchant Account
-                </button>
+                <LoadingButton
+                  type="submit"
+                  loading={isSubmitting}
+                  className="w-full rounded-lg bg-primary text-white p-4"
+                >
+                  {isSubmitting ? 'Creating account...' : 'Create Merchant Account'}
+                </LoadingButton>
+
                 <div className="mt-4 text-center">
                   <p className="text-sm">
                     Already have an account?{' '}
