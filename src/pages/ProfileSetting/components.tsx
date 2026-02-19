@@ -6,66 +6,43 @@ export const ProfileRow = ({
   editing,
   onEdit,
   onChange,
+  error,
 }: {
   label: string;
   value: string;
   editing?: boolean;
   onEdit: () => void;
   onChange: (val: string) => void;
+  error?: string;
 }) => {
   return (
-    <div className="flex justify-between items-center border-b pb-3">
-      <div className="text-gray-500">{label}</div>
+    <div className="flex flex-col border-b pb-3">
+      <div className="flex justify-between items-center">
+        <div className="text-black">{label}</div>
 
-      <div className="flex items-center gap-3">
-        {editing ? (
-          <input
-            autoFocus
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-            className="border-b outline-none text-right font-medium"
-          />
-        ) : (
-          <div className="font-medium">{value}</div>
-        )}
+        <div className="flex items-center gap-3">
+          {editing ? (
+            <input
+              autoFocus
+              value={value || ''}
+              onChange={(e) => onChange(e.target.value)}
+              onBlur={onEdit}
+              onKeyDown={(e) => e.key === 'Enter' && onEdit()}
+              className={`border-b outline-none text-right font-medium ${
+                error ? 'border-red-500' : 'text-black'
+              }`}
+            />
+          ) : (
+            <div className="font-medium text-black">{value}</div>
+          )}
 
-        <button onClick={onEdit} className="text-gray-400 hover:text-black">
-          <FiEdit2 />
-        </button>
+          <button type="button" onClick={onEdit} className="text-gray-400 hover:text-black">
+            <FiEdit2 />
+          </button>
+        </div>
       </div>
-    </div>
-  );
-};
 
-export const EditableField = ({
-  value,
-  editing,
-  onEdit,
-  onChange,
-  className,
-}: {
-  value: string;
-  editing?: boolean;
-  onEdit: () => void;
-  onChange: (val: string) => void;
-  className?: string;
-}) => {
-  return (
-    <div className="flex items-center gap-3">
-      {editing ? (
-        <input
-          autoFocus
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className={`border-b outline-none ${className}`}
-        />
-      ) : (
-        <div className={className}>{value}</div>
-      )}
-
-      <button onClick={onEdit} className="text-gray-400 hover:text-black">
-        <FiEdit2 />
-      </button>
+      {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
     </div>
   );
 };
@@ -78,11 +55,10 @@ interface Props {
   onUpload: (file?: File) => void;
 }
 export const DocumentUploadRow = ({ label, file, loading, inputRef, onUpload }: Props) => {
-  console.log('>>>>>>>>>>>>>>>>>>>', file);
   return (
     <div className="relative border rounded-lg p-4 flex items-center justify-between">
       <div>
-        <p className="font-medium">{label}</p>
+        <p className="font-medium text-black">{label}</p>
 
         {file ? (
           <a
@@ -94,7 +70,7 @@ export const DocumentUploadRow = ({ label, file, loading, inputRef, onUpload }: 
             View uploaded PDF
           </a>
         ) : (
-          <p className="text-gray-400 text-sm">No document uploaded</p>
+          <p className="text-black text-sm">No document uploaded</p>
         )}
       </div>
 

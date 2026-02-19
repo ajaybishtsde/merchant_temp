@@ -70,7 +70,7 @@ export const AdminAPI = {
   },
   updateProfile: (newMerchantData: FormData) =>
     handleRequest(
-      api.post(`${prefix}/auth/register`, newMerchantData, createAuthorizationHeader()),
+      api.patch(`${prefix}/update-profile`, newMerchantData, createAuthorizationHeader()),
     ),
   getAlldata: (query?: AdminQuery) => {
     return handleRequest(

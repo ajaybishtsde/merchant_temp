@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import DefaultLayout from '@/layout/DefaultLayout';
-import HotspotCU from './component/HotspotCU';
+import PlaceCU from './component/PlaceCU';
 import BreadCrumb from '@/components/common/ui/BreadCrumb';
 import { AgGridReact } from 'ag-grid-react';
 import SwitchInput from '@/components/ui/Switch';
@@ -9,7 +9,7 @@ import { FilterBar } from '@/components/filters';
 import Pagination from '@/components/common/ui/PaginationFooter';
 import { toast } from 'react-toastify';
 import { HotspotAPI, HotspotQuery, HotspotResponse, IPlaceHotspot } from '@/utils/api/hotspot.api';
-import HotspotAction from './component/HotspotAction';
+import PlaceAction from './component/PlaceAction';
 import HotspotFilter from '@/components/filters/HotspotFilter';
 import { radDateFormatter } from '@/utils';
 
@@ -153,7 +153,7 @@ const Places = () => {
       flex: 0.7,
       sortable: true,
       cellRenderer: (params: { data: IPlaceHotspot }) => {
-        return <HotspotAction data={params.data} fetchPlace={fetchPlace} />;
+        return <PlaceAction data={params.data} fetchPlace={fetchPlace} />;
       },
     },
   ];
@@ -161,7 +161,7 @@ const Places = () => {
   return (
     <DefaultLayout>
       {isAddHotspot && (
-        <HotspotCU isOpen={isAddHotspot} toggleModal={toggleModal} fetchLatestData={fetchPlace} />
+        <PlaceCU isOpen={isAddHotspot} toggleModal={toggleModal} fetchLatestData={fetchPlace} />
       )}
       {isOpenFilter && (
         <HotspotFilter

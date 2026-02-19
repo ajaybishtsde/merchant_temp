@@ -15,11 +15,11 @@ import debounce from 'lodash.debounce';
 import PlaceForm from './PlaceForm';
 import { PriceRangeAPI, PriceRangeResponse } from '@/utils/api/priceRange.api';
 import { VibeTypeAPI, VibeTypeResponse } from '@/utils/api/vibeType.api';
-import ButtonLoader from '@/components/common/Loader/ButtonLoader';
+import LoadingButton from '@/components/common/LoadingButton';
 
 const libraries = ['places'];
 
-interface HotspotCUProps {
+interface PlaceCUProps {
   isOpen: boolean;
   toggleModal: () => void;
   fetchLatestData: () => void;
@@ -33,18 +33,12 @@ interface GooglePlace {
   location: { latitude: number; longitude: number };
 }
 
-const HotspotCU: React.FC<HotspotCUProps> = ({
-  isOpen,
-  toggleModal,
-  fetchLatestData,
-  updateData,
-}) => {
+const PlaceCU: React.FC<PlaceCUProps> = ({ isOpen, toggleModal, fetchLatestData, updateData }) => {
   const [neighborhoods, setNeighborhoods] = useState<NeighborhoodResponse>({
     count: 0,
     data: [],
   });
   const [place, setPlace] = useState<GooglePlace | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [priceRange, setPriceRange] = useState<PriceRangeResponse>({
     count: 0,
@@ -61,19 +55,16 @@ const HotspotCU: React.FC<HotspotCUProps> = ({
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     watch,
     setValue,
     reset,
-    control,
   } = useForm<NewPlaceHotspot>({
     defaultValues: {
       placeDetails: '',
     },
     shouldUnregister: true,
   });
-
-  const hotspotType = watch('hotspotType');
 
   const fetchNeighborhood = async () => {
     try {
@@ -141,7 +132,6 @@ const HotspotCU: React.FC<HotspotCUProps> = ({
 
   const onSubmit = async (formData: NewPlaceHotspot) => {
     try {
-      console.log('formData: ', formData);
       if (!formData.image && !updateData?.image) {
         setImageError('Image is required');
         return;
@@ -150,7 +140,6 @@ const HotspotCU: React.FC<HotspotCUProps> = ({
         toast.error('Oops! We couldn’t load location results. Please try again later.');
         return;
       }
-      setIsLoading(true);
       const form = new FormData();
 
       form.append('neighborhoodId', String(formData.neighborhoodId));
@@ -177,13 +166,6 @@ const HotspotCU: React.FC<HotspotCUProps> = ({
         'placeOpeningHours',
         JSON.stringify((formData as NewPlaceHotspot).placeOpeningHours),
       );
-
-      form.append('isDeal', String((formData as NewPlaceHotspot).isDeal));
-      const dealDescription = (formData as NewPlaceHotspot).dealDescription;
-      if (dealDescription) {
-        form.append('dealDescription', dealDescription);
-      }
-
       const res = updateData
         ? await HotspotAPI.update(updateData.id, form)
         : await HotspotAPI.create(form);
@@ -195,9 +177,7 @@ const HotspotCU: React.FC<HotspotCUProps> = ({
 
       fetchLatestData();
       toggleModal();
-      setIsLoading(false);
     } catch (error: any) {
-      setIsLoading(false);
       toast.error(error.message || 'Something went wrong', {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
@@ -275,9 +255,6 @@ const HotspotCU: React.FC<HotspotCUProps> = ({
                   </option>
                 ))}
               </select>
-              {/* {errors['priceRange' as keyof NewHotspot] && (
-                <div className="text-sm text-red-600">Price range is required</div>
-              )} */}
             </div>
 
             <div className="mb-4">
@@ -297,9 +274,6 @@ const HotspotCU: React.FC<HotspotCUProps> = ({
                   </option>
                 ))}
               </select>
-              {/* {errors['vibeType' as keyof NewHotspot] && (
-                <div className="text-sm text-red-600">Vibe type is required</div>
-              )} */}
             </div>
 
             <PlaceForm
@@ -310,19 +284,15 @@ const HotspotCU: React.FC<HotspotCUProps> = ({
               updateData={updateData as IPlaceHotspot}
               imageError={imageError}
               setImageError={setImageError}
-              control={control}
             />
             <div className="mb-5">
-              {isLoading ? (
-                <ButtonLoader />
-              ) : (
-                <input
-                  disabled={isLoading}
-                  type="submit"
-                  value="Submit"
-                  className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
-                />
-              )}
+              <LoadingButton
+                type="submit"
+                loading={isSubmitting}
+                className="w-full rounded-lg bg-primary text-white p-4"
+              >
+                {isSubmitting ? 'Submiting...' : 'Submit'}
+              </LoadingButton>
             </div>
           </form>
         </div>
@@ -331,4 +301,4 @@ const HotspotCU: React.FC<HotspotCUProps> = ({
   );
 };
 
-export default HotspotCU;
+export default PlaceCU;

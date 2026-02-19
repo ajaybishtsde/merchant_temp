@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import { FiX } from 'react-icons/fi';
 import { AdminAPI } from '@/utils/api/admin.api';
 import { PasswordInput } from './PasswordInput';
+import LoadingButton from '@/components/common/LoadingButton';
 
 interface Props {
   isOpen: boolean;
@@ -56,7 +57,7 @@ const ChangePasswordModal = ({ isOpen, onClose }: Props) => {
 
       if (res?.status) {
         toast.success('Password reset successful');
-        resetForm(); // clear fields after success
+        resetForm();
         onClose();
       }
     } catch (err: any) {
@@ -110,17 +111,14 @@ const ChangePasswordModal = ({ isOpen, onClose }: Props) => {
 
         {/* Actions */}
         <div className="flex justify-end gap-3 mt-8">
-          <button onClick={handleClose} className="px-5 py-2 rounded-lg border">
-            Cancel
-          </button>
-
-          <button
+          <LoadingButton
+            type="submit"
             onClick={handleChangePassword}
-            disabled={loading}
-            className="bg-primary text-white px-5 py-2 rounded-lg"
+            loading={loading}
+            className="w-full rounded-lg bg-primary text-white p-4"
           >
             {loading ? 'Updating...' : 'Update Password'}
-          </button>
+          </LoadingButton>
         </div>
       </div>
     </div>

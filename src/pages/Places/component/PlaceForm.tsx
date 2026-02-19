@@ -1,42 +1,8 @@
 import { FoodCategoryAPI, FoodCategoryResponse } from '@/utils/api/foodCategory.api';
 import { IPlaceHotspot, NewPlaceHotspot } from '@/utils/api/hotspot.api';
 import { PlaceCategoryAPI, PlaceCategoryResponse } from '@/utils/api/placeCategory.api';
-import { IUser, UserAPI } from '@/utils/api/user.api';
 import React, { useEffect, useState } from 'react';
-import {
-  Controller,
-  FieldErrors,
-  UseFormRegister,
-  UseFormSetValue,
-  UseFormWatch,
-} from 'react-hook-form';
-import { MentionsInput, Mention } from 'react-mentions';
-
-export const mentionStyles = {
-  control: {
-    fontSize: 14,
-    fontFamily: 'inherit',
-  },
-  input: {
-    padding: '16px 40px 16px 24px',
-    color: '#050505ff',
-    WebkitFontSmoothing: 'antialiased',
-  },
-  highlighter: {
-    padding: '16px 40px 16px 24px',
-    color: '#050505ff',
-    backgroundColor: 'transparent',
-  },
-  suggestions: {
-    list: {
-      color: '#7389adff',
-    },
-    item: {
-      padding: '5px 15px',
-      borderBottom: '1px solid rgba(0,0,0,0.15)',
-    },
-  },
-};
+import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form';
 
 interface PlaceFormProps {
   register: UseFormRegister<NewPlaceHotspot>;
@@ -46,7 +12,6 @@ interface PlaceFormProps {
   updateData: IPlaceHotspot;
   imageError: string | null;
   setImageError: any;
-  control: any;
 }
 
 const PlaceForm = ({
@@ -57,7 +22,6 @@ const PlaceForm = ({
   updateData,
   imageError,
   setImageError,
-  control,
 }: PlaceFormProps) => {
   const [placeCategories, setPlaceCategories] = useState<PlaceCategoryResponse>({
     count: 0,
@@ -83,8 +47,6 @@ const PlaceForm = ({
       setValue(`placeOpeningHours.${index}.day`, item.day);
     });
   }, [setValue]);
-
-  const isDealAvailable = watch('isDeal');
 
   const defaultOpeningHours = [
     'Monday',
@@ -118,21 +80,6 @@ const PlaceForm = ({
     fetchCategory();
   }, []);
 
-  const fetchUsers = async (query: string, callback: any) => {
-    if (!query) return;
-
-    // Filter users based on the query typed after the '@' symbol
-    const res = await UserAPI.all({ name: query });
-
-    // Call the callback function with the filtered data
-    callback(
-      res.result.data.map((user: IUser) => ({
-        id: user.user_id,
-        display: `${user.user_firstName} ${user.user_lastName}`,
-      })),
-    );
-  };
-
   return (
     <div>
       <div>
@@ -153,9 +100,6 @@ const PlaceForm = ({
               </option>
             ))}
           </select>
-          {/* {errors['placeCategory' as keyof NewPlaceHotspot] && (
-                        <div className="text-sm text-red-600">Place Category is required</div>
-                    )} */}
         </div>
 
         <div className="mb-4">
@@ -179,28 +123,12 @@ const PlaceForm = ({
 
         <div className="mb-4">
           <label className="mb-2.5 block font-medium">Place Details</label>
-          <Controller
-            name="placeDetails"
-            control={control}
-            render={({ field }) => (
-              <MentionsInput
-                {...field}
-                value={field.value ?? ''}
-                placeholder="Enter Place Details and use @ to mention users..."
-                style={mentionStyles}
-              >
-                <Mention
-                  trigger="@"
-                  data={fetchUsers}
-                  displayTransform={(id, display) => `@${display}`}
-                />
-              </MentionsInput>
-            )}
+          <textarea
+            {...register('placeDetails')}
+            placeholder="Enter Place Details"
+            rows={4}
+            className="w-full rounded-lg border border-stroke bg-transparent py-4 px-6 text-black outline-none focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white"
           />
-
-          {/* {errors['placeDetails' as keyof NewPlaceHotspot] && (
-                        <div className="text-sm text-red-600">Place Details is required</div>
-                    )} */}
         </div>
 
         <div className="mb-6">
@@ -283,25 +211,6 @@ const PlaceForm = ({
           );
         })}
       </div>
-
-      <div className="flex items-center gap-2 mb-3">
-        <input type="checkbox" {...register('isDeal', { required: false })} />
-        <label className="text-sm">Is Deal Available?</label>
-      </div>
-
-      {isDealAvailable && (
-        <div className="mb-4">
-          <label className="mb-2.5 block font-medium">Deal description</label>
-          <textarea
-            placeholder="Enter Deal description"
-            {...register('dealDescription', { required: true })}
-            className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-          />
-          {errors['dealDescription' as keyof NewPlaceHotspot] && (
-            <div className="text-sm text-red-600">Deal Description is required</div>
-          )}
-        </div>
-      )}
     </div>
   );
 };

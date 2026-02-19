@@ -89,7 +89,11 @@ export const HotspotAPI = {
     handleRequest(api.patch(`/${prefix}/${id}`, updateReason, createAuthorizationFormDataHeader())),
   updateStatus: (id: number, updateFlag: object, hotspotType: string) => {
     return handleRequest(
-      api.patch(`/${prefix}/${id}`, { ...updateFlag, hotspotType }, createAuthorizationHeader()),
+      api.patch(
+        `/${prefix}/update/${id}`,
+        { ...updateFlag, hotspotType },
+        createAuthorizationHeader(),
+      ),
     );
   },
 };

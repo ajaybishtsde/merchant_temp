@@ -8,6 +8,7 @@ import {
   PlaceOfferAPI,
   PlaceResponse,
 } from '@/utils/api/place-offer.api';
+import LoadingButton from '@/components/common/LoadingButton';
 
 interface PlaceOfferCUProps {
   isOpen: boolean;
@@ -27,7 +28,7 @@ const PlaceOfferCU: React.FC<PlaceOfferCUProps> = ({
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<NewPlaceOffer>({
     defaultValues: updateData
       ? {
@@ -140,11 +141,13 @@ const PlaceOfferCU: React.FC<PlaceOfferCUProps> = ({
             </div>
 
             <div className="mb-5">
-              <input
+              <LoadingButton
                 type="submit"
-                value="Submit"
-                className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
-              />
+                loading={isSubmitting}
+                className="w-full rounded-lg bg-primary text-white p-4"
+              >
+                {isSubmitting ? 'Submiting...' : 'Submit'}
+              </LoadingButton>
             </div>
           </form>
         </div>

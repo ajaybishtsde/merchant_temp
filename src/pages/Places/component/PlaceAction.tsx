@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { MdDelete, MdModeEdit } from 'react-icons/md';
 import DeleteAlertModel from '@/components/common/model/DeleteAlertModel';
-import HotspotCU from './HotspotCU';
+import PlaceCU from './PlaceCU';
 import { toast } from 'react-toastify';
 import { HotspotAPI, IPlaceHotspot } from '@/utils/api/hotspot.api';
-interface HotspotActionProps {
+interface PlaceActionProps {
   data: IPlaceHotspot;
   fetchPlace: () => void;
 }
 
-const HotspotAction: React.FC<HotspotActionProps> = ({ data, fetchPlace }) => {
+const PlaceAction: React.FC<PlaceActionProps> = ({ data, fetchPlace }) => {
   const [isDeleteUser, setIsDeleteUser] = useState<boolean>(false);
   const [isForEdit, setIsForEdit] = useState<boolean>(false);
   const toggleEditModel = () => {
@@ -34,11 +34,11 @@ const HotspotAction: React.FC<HotspotActionProps> = ({ data, fetchPlace }) => {
           isOpen={isDeleteUser}
           onDelete={handleDeleteNeighbor}
           toggleModal={toggleDeleteAlertModel}
-          deleteFor={'Experience'}
+          deleteFor={'Place'}
         />
       )}
       {isForEdit && (
-        <HotspotCU
+        <PlaceCU
           isOpen={isForEdit}
           toggleModal={toggleEditModel}
           fetchLatestData={fetchPlace}
@@ -63,4 +63,4 @@ const HotspotAction: React.FC<HotspotActionProps> = ({ data, fetchPlace }) => {
   );
 };
 
-export default HotspotAction;
+export default PlaceAction;

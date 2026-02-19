@@ -59,7 +59,7 @@ export const PlaceOfferAPI = {
     handleRequest(api.patch(`/${prefix}/${id}`, updateReason, createAuthorizationHeader())),
   updateStatus: (id: number, status: boolean) => {
     return handleRequest(
-      api.patch(`/${prefix}/${id}`, { is_active: status }, createAuthorizationHeader()),
+      api.patch(`${prefix}/update/${id}`, { is_active: status }, createAuthorizationHeader()),
     );
   },
 };

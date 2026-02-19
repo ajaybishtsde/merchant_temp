@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import DefaultLayout from '@/layout/DefaultLayout';
 import { toast } from 'react-toastify';
 import SwitchInput from '@/components/ui/Switch';
@@ -23,7 +23,6 @@ const PlaceOffer = () => {
   const fetchPlaceOffer = async () => {
     try {
       const res = await PlaceOfferAPI.getAll();
-      console.log('res: ', res);
       if (res.status) {
         setPlaceOffer(res.result);
       }
@@ -51,7 +50,6 @@ const PlaceOffer = () => {
       cellRenderer: (params: { data: IPlaceOffer }) => {
         const active = params?.data?.is_active as boolean;
         const handleSwitchChange = (newValue: boolean) => {
-          console.log('is_active: ', params.data, newValue);
           PlaceOfferAPI.updateStatus(params.data.id, newValue).then(() => {
             toast.success('Updated Successfully');
             fetchPlaceOffer();

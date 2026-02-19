@@ -43,7 +43,7 @@ const AccountSettings = () => {
     <DefaultLayout>
       <BreadCrumb pageName="Account Settings" />
 
-      <div className="flex justify-center py-10">
+      <div className="flex justify-center py-10 text-black">
         <div className="w-full max-w-2xl bg-white rounded-2xl shadow-lg p-8 space-y-8">
           <h2 className="text-2xl font-bold text-center">Account Settings</h2>
 

@@ -43,7 +43,7 @@ const PlaceOfferAction: React.FC<PlaceOfferProps> = ({ data, fetchPlaceOffer }) 
           isOpen={isDeleteUser}
           onDelete={handleDeletePlaceOffer}
           toggleModal={toggleDeleteAlertModel}
-          deleteFor={'PlaceOffer'}
+          deleteFor={'Place Offer'}
           isWarningShow={true}
         />
       )}
