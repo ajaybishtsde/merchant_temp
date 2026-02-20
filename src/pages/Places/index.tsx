@@ -10,7 +10,7 @@ import Pagination from '@/components/common/ui/PaginationFooter';
 import { toast } from 'react-toastify';
 import { HotspotAPI, HotspotQuery, HotspotResponse, IPlaceHotspot } from '@/utils/api/hotspot.api';
 import PlaceAction from './component/PlaceAction';
-import HotspotFilter from '@/components/filters/HotspotFilter';
+import PlaceFilter from '@/components/filters/PlaceFilter';
 import { radDateFormatter } from '@/utils';
 
 const Places = () => {
@@ -164,7 +164,7 @@ const Places = () => {
         <PlaceCU isOpen={isAddHotspot} toggleModal={toggleModal} fetchLatestData={fetchPlace} />
       )}
       {isOpenFilter && (
-        <HotspotFilter
+        <PlaceFilter
           isOpen={isOpenFilter}
           toggleModal={toggleFilterModal}
           clearFilter={handleClearFilter}

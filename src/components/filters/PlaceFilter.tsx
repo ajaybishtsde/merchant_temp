@@ -3,7 +3,7 @@ import { FilterHotspotQuery } from '../common/Interfaces/filter.interface';
 import BaseModal from '../common/model';
 import { IsActiveFilter } from '../common/Interfaces';
 
-interface HotspotFilterProps {
+interface PlaceFilterProps {
   isOpen: boolean;
   toggleModal: () => void;
   hotspot: FilterHotspotQuery;
@@ -12,7 +12,7 @@ interface HotspotFilterProps {
   applyFilter: () => void;
 }
 
-const HotspotFilter: React.FC<HotspotFilterProps> = ({
+const PlaceFilter: React.FC<PlaceFilterProps> = ({
   isOpen,
   hotspot,
   toggleModal,
@@ -100,4 +100,4 @@ const HotspotFilter: React.FC<HotspotFilterProps> = ({
   );
 };
 
-export default HotspotFilter;
+export default PlaceFilter;
