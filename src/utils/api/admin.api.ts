@@ -46,6 +46,19 @@ export interface AdminQuery {
   endDate?: string;
 }
 
+export interface MerchantDashboardResult {
+  redemptionRate: number;
+  totalRedeemed: number;
+  totalRevealed: number;
+}
+
+export interface MerchantDashboardResponse {
+  statusCode: number;
+  status: boolean;
+  message: string;
+  result: MerchantDashboardResult;
+}
+
 export const AdminAPI = {
   login: (login: MerchantLogin) => handleRequest(api.post(`${prefix}/auth/login`, login)),
   addNew: (newMerchantData: FormData) =>
@@ -102,6 +115,8 @@ export const AdminAPI = {
 
   deleteById: (id: number) =>
     handleRequest(api.delete(`${prefix}/${id}`, createAuthorizationHeader())),
+
+  getDashboardData: () => handleRequest(api.get(`merchat-dashboard`, createAuthorizationHeader())),
 
   updateStatistics: () => handleRequest(api.patch(`statistics`, {}, createAuthorizationHeader())),
 };

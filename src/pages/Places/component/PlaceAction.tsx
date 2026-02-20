@@ -12,6 +12,8 @@ interface PlaceActionProps {
 const PlaceAction: React.FC<PlaceActionProps> = ({ data, fetchPlace }) => {
   const [isDeleteUser, setIsDeleteUser] = useState<boolean>(false);
   const [isForEdit, setIsForEdit] = useState<boolean>(false);
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
+
   const toggleEditModel = () => {
     setIsForEdit(!isForEdit);
   };
@@ -19,12 +21,20 @@ const PlaceAction: React.FC<PlaceActionProps> = ({ data, fetchPlace }) => {
   const toggleDeleteAlertModel = () => {
     setIsDeleteUser(!isDeleteUser);
   };
-  const handleDeleteNeighbor = () => {
-    HotspotAPI.delete(data.id, { type: data.hotspotType }).then(() => {
+
+  const handleDeleteNeighbor = async () => {
+    try {
+      setIsDeleting(true);
+      await HotspotAPI.delete(data.id);
+
       toast.success('Deleted Successfully');
       fetchPlace();
       setIsDeleteUser(false);
-    });
+    } catch (error) {
+      toast.error('Delete failed');
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
   return (
@@ -34,9 +44,11 @@ const PlaceAction: React.FC<PlaceActionProps> = ({ data, fetchPlace }) => {
           isOpen={isDeleteUser}
           onDelete={handleDeleteNeighbor}
           toggleModal={toggleDeleteAlertModel}
-          deleteFor={'Place'}
+          deleteFor="Place"
+          isDeleting={isDeleting}
         />
       )}
+
       {isForEdit && (
         <PlaceCU
           isOpen={isForEdit}
@@ -45,13 +57,15 @@ const PlaceAction: React.FC<PlaceActionProps> = ({ data, fetchPlace }) => {
           updateData={data}
         />
       )}
-      <div className="flex gap-x-3 whitespace-nowrap capitalize mt-1 ">
+
+      <div className="flex gap-x-3 whitespace-nowrap capitalize mt-1">
         <button
           className="bg-gray-500 hover:bg-gray-700 font-bold rounded bg-blue-600 text-white p-1"
           onClick={toggleEditModel}
         >
           <MdModeEdit className="text-xl" />
         </button>
+
         <button
           className="hover:bg-red-500 font-bold rounded bg-red-600 text-white p-1"
           onClick={toggleDeleteAlertModel}

@@ -67,7 +67,7 @@ const ForgotPassword: React.FC = () => {
       const res = await AdminAPI.resetPassword(payload);
 
       if (res?.status) {
-        toast.success('Password reset successful');
+        toast.success('Password reset successfully');
         navigate('/auth/login');
       }
     } catch (err: any) {

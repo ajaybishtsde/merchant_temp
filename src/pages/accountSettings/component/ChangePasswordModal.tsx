@@ -56,7 +56,7 @@ const ChangePasswordModal = ({ isOpen, onClose }: Props) => {
       const res = await AdminAPI.changePassword(payload);
 
       if (res?.status) {
-        toast.success('Password reset successful');
+        toast.success('Password reset successfullly');
         resetForm();
         onClose();
       }

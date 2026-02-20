@@ -56,7 +56,7 @@ export const PlaceOfferAPI = {
   delete: (id: number) =>
     handleRequest(api.delete(`/${prefix}/${id}`, createAuthorizationHeader())),
   update: (id: number, updateReason: FormData | Partial<NewPlaceOffer>) =>
-    handleRequest(api.patch(`/${prefix}/${id}`, updateReason, createAuthorizationHeader())),
+    handleRequest(api.patch(`/${prefix}/update/${id}`, updateReason, createAuthorizationHeader())),
   updateStatus: (id: number, status: boolean) => {
     return handleRequest(
       api.patch(`${prefix}/update/${id}`, { is_active: status }, createAuthorizationHeader()),

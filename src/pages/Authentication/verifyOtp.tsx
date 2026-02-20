@@ -43,8 +43,6 @@ const OTPVerify: React.FC = () => {
         otp: data.otp,
       };
 
-      console.log('Verify payload:', payload);
-
       const result = await AdminAPI.verifyEmailOtp(payload);
       if (result?.status) {
         toast.success('OTP Verified');

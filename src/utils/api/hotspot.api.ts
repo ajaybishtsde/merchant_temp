@@ -78,15 +78,16 @@ export const HotspotAPI = {
     handleRequest(
       api.get(`/${prefix}/places/all`, { params: query, ...createAuthorizationHeader() }),
     ),
-  delete: (id: number, query: { type: string }) =>
+  delete: (id: number) =>
     handleRequest(
-      api.delete(`/${prefix}/${id}`, {
-        params: query,
+      api.delete(`/${prefix}/merchant-place/${id}`, {
         ...createAuthorizationHeader(),
       }),
     ),
   update: (id: number, updateReason: FormData) =>
-    handleRequest(api.patch(`/${prefix}/${id}`, updateReason, createAuthorizationFormDataHeader())),
+    handleRequest(
+      api.patch(`/${prefix}/update/${id}`, updateReason, createAuthorizationFormDataHeader()),
+    ),
   updateStatus: (id: number, updateFlag: object, hotspotType: string) => {
     return handleRequest(
       api.patch(
