@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { AdminAPI } from '@/utils/api/admin.api';
+import { MerchantAPI } from '@/utils/api/merchant.api';
 import LoadingButton from '@/components/common/LoadingButton';
 
 interface OTPForm {
@@ -43,7 +43,7 @@ const OTPVerify: React.FC = () => {
         otp: data.otp,
       };
 
-      const result = await AdminAPI.verifyEmailOtp(payload);
+      const result = await MerchantAPI.verifyEmailOtp(payload);
       if (result?.status) {
         toast.success('OTP Verified');
         navigate('/auth/login');
@@ -59,7 +59,7 @@ const OTPVerify: React.FC = () => {
     try {
       setResendLoading(true);
 
-      const result = await AdminAPI.resendOtp({ email });
+      const result = await MerchantAPI.resendOtp({ email });
 
       if (result?.status) {
         setResentMessage('OTP resent successfully');

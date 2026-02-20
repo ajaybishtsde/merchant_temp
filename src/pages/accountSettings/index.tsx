@@ -6,7 +6,7 @@ import { FiLock, FiLogOut, FiTrash2 } from 'react-icons/fi';
 import ChangePasswordModal from './component/ChangePasswordModal';
 import { SettingsCard } from './component/SettingsCard';
 import { useCurrentUser } from '@/context/userContext';
-import { AdminAPI } from '@/utils/api/admin.api';
+import { MerchantAPI } from '@/utils/api/merchant.api';
 import ConfirmDeleteModal from './component/ConfirmDeleteModal';
 
 const AccountSettings = () => {
@@ -21,11 +21,11 @@ const AccountSettings = () => {
     try {
       setDeleteLoading(true);
 
-      const res = await AdminAPI.deleteSelf();
+      const res = await MerchantAPI.deleteSelf();
 
       if (res?.status) {
         toast.success(res.message);
-        logOutUser(); // logout after delete
+        logOutUser();
       }
     } catch {
       toast.error('Failed to delete account');

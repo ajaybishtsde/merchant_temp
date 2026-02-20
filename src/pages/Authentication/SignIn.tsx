@@ -7,7 +7,7 @@ import { useCurrentUser } from '@/context/userContext';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
-import { AdminAPI, MerchantLogin } from '@/utils/api/admin.api';
+import { MerchantAPI, MerchantLogin } from '@/utils/api/merchant.api';
 import LoadingButton from '@/components/common/LoadingButton';
 
 const SignIn: React.FC = () => {
@@ -31,7 +31,7 @@ const SignIn: React.FC = () => {
     if (isSubmitting) return;
 
     try {
-      const res = await AdminAPI.login(data);
+      const res = await MerchantAPI.login(data);
 
       if (res.status) {
         toast.success('user logged-in successfully', {

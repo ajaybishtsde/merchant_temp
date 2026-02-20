@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { FiX } from 'react-icons/fi';
-import { AdminAPI } from '@/utils/api/admin.api';
+import { MerchantAPI } from '@/utils/api/merchant.api';
 import { PasswordInput } from './PasswordInput';
 import LoadingButton from '@/components/common/LoadingButton';
 
@@ -53,7 +53,7 @@ const ChangePasswordModal = ({ isOpen, onClose }: Props) => {
         newPassword,
       };
 
-      const res = await AdminAPI.changePassword(payload);
+      const res = await MerchantAPI.changePassword(payload);
 
       if (res?.status) {
         toast.success('Password reset successfullly');

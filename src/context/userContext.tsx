@@ -1,4 +1,4 @@
-import { CurrentUser, IAdmin } from '@/utils/api/admin.api';
+import { CurrentUser } from '@/utils/api/merchant.api';
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 // Define the type for the product context

@@ -1,6 +1,6 @@
 import { server_url } from '@/config';
 import axios from 'axios';
-import { CurrentUser } from './admin.api';
+import { CurrentUser } from './merchant.api';
 
 const API_BASE_URL = `${server_url}`;
 

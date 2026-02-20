@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { TfiEmail } from 'react-icons/tfi';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
-import { AdminAPI } from '@/utils/api/admin.api';
+import { MerchantAPI } from '@/utils/api/merchant.api';
 import LoadingButton from '@/components/common/LoadingButton';
 
 interface EmailForm {
@@ -44,7 +44,7 @@ const ForgotPassword: React.FC = () => {
 
   const onSendOtp = async (data: EmailForm) => {
     try {
-      const res = await AdminAPI.forgotPassword(data);
+      const res = await MerchantAPI.forgotPassword(data);
 
       if (res?.status) {
         toast.success('OTP sent to your email');
@@ -64,7 +64,7 @@ const ForgotPassword: React.FC = () => {
         password: data.password,
       };
 
-      const res = await AdminAPI.resetPassword(payload);
+      const res = await MerchantAPI.resetPassword(payload);
 
       if (res?.status) {
         toast.success('Password reset successfully');

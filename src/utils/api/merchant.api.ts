@@ -19,11 +19,6 @@ export interface Merchant {
   isMobileVerified: boolean;
 }
 
-export interface AdminResponse {
-  data: Merchant[];
-  count: number;
-}
-
 export interface CurrentUser extends Merchant {
   token: string;
 }
@@ -41,25 +36,7 @@ export interface NewMerchant {
   documents?: FileList;
 }
 
-export interface AdminQuery {
-  startDate?: string;
-  endDate?: string;
-}
-
-export interface MerchantDashboardResult {
-  redemptionRate: number;
-  totalRedeemed: number;
-  totalRevealed: number;
-}
-
-export interface MerchantDashboardResponse {
-  statusCode: number;
-  status: boolean;
-  message: string;
-  result: MerchantDashboardResult;
-}
-
-export const AdminAPI = {
+export const MerchantAPI = {
   login: (login: MerchantLogin) => handleRequest(api.post(`${prefix}/auth/login`, login)),
   addNew: (newMerchantData: FormData) =>
     handleRequest(
@@ -85,14 +62,6 @@ export const AdminAPI = {
     handleRequest(
       api.patch(`${prefix}/update-profile`, newMerchantData, createAuthorizationHeader()),
     ),
-  getAlldata: (query?: AdminQuery) => {
-    return handleRequest(
-      api.get('/admin-dashboard-data', {
-        params: query,
-        ...createAuthorizationHeader(),
-      }),
-    );
-  },
   updateLogo: (file: File) => {
     const formData = new FormData();
 

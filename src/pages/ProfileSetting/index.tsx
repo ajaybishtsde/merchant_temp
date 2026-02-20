@@ -4,7 +4,7 @@ import BreadCrumb from '@/components/common/ui/BreadCrumb';
 import { toast } from 'react-toastify';
 import { FiEdit2 } from 'react-icons/fi';
 import { DocumentUploadRow, ProfileRow } from './components';
-import { AdminAPI } from '@/utils/api/admin.api';
+import { MerchantAPI } from '@/utils/api/merchant.api';
 import companyLogo from '@/static/images/user/company-logo.png';
 import { Controller, useForm } from 'react-hook-form';
 import LoadingButton from '@/components/common/LoadingButton';
@@ -47,7 +47,7 @@ const ProfileSetting = () => {
 
   const fetchMerchantProfile = async () => {
     try {
-      const res = await AdminAPI.getProfile();
+      const res = await MerchantAPI.getProfile();
 
       if (res.status) {
         setMerchant(res.result);
@@ -76,7 +76,7 @@ const ProfileSetting = () => {
     try {
       setDocLoading(true);
 
-      const res = await AdminAPI.updateDocs(file);
+      const res = await MerchantAPI.updateDocs(file);
 
       if (res?.status) {
         toast.success('Document uploaded successfully');
@@ -109,7 +109,7 @@ const ProfileSetting = () => {
       formData.append('contact_number', data.contact_number);
       formData.append('company_address', data.company_address);
 
-      await AdminAPI.updateProfile(formData);
+      await MerchantAPI.updateProfile(formData);
 
       toast.success('Profile Updated Successfully');
 
@@ -134,7 +134,7 @@ const ProfileSetting = () => {
     try {
       setLogoLoading(true);
 
-      const res = await AdminAPI.updateLogo(file);
+      const res = await MerchantAPI.updateLogo(file);
 
       if (res?.status) {
         toast.success('Logo uploaded successfully');

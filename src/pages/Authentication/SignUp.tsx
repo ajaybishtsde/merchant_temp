@@ -6,7 +6,7 @@ import { TfiEmail } from 'react-icons/tfi';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
-import { AdminAPI } from '@/utils/api/admin.api';
+import { MerchantAPI } from '@/utils/api/merchant.api';
 import LoadingButton from '@/components/common/LoadingButton';
 
 interface MerchantRegister {
@@ -40,7 +40,7 @@ const SignUp: React.FC = () => {
       formData.append('contact_person', data.contactPerson);
       // formData.append('documents', data.documents[0]);
 
-      const res = await AdminAPI.addNew(formData);
+      const res = await MerchantAPI.addNew(formData);
 
       if (res?.status) {
         toast.success('Verification email sent. Please check your inbox.', {

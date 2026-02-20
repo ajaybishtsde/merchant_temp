@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import DefaultLayout from '@/layout/DefaultLayout';
 import BreadCrumb from '@/components/common/ui/BreadCrumb';
 import { FiBarChart2, FiEye, FiCheckCircle } from 'react-icons/fi';
-import { AdminAPI } from '@/utils/api/admin.api';
+import { MerchantAPI } from '@/utils/api/merchant.api';
 
 interface DashboardStats {
   redemptionRate: number;
@@ -19,7 +19,7 @@ const Dashboard = () => {
 
   const getDashboardData = async () => {
     try {
-      const res = await AdminAPI.getDashboardData();
+      const res = await MerchantAPI.getDashboardData();
 
       if (res?.status) {
         setStats(res.result);
