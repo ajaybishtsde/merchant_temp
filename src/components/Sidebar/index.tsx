@@ -4,9 +4,6 @@ import SidebarLink from './SidebarLink';
 import { links } from '@/utils/app.sidebar-data';
 import { GrClose } from 'react-icons/gr';
 import DarkModeSwitcher from '../Header/DarkModeSwitcher';
-import { CiLogout } from 'react-icons/ci';
-import { useCurrentUser } from '@/context/userContext';
-import useColorMode from '@/hooks/useColorMode';
 import PhoneMockUp from '@/static/images/logo/logo.png';
 
 interface SidebarProps {
@@ -15,9 +12,6 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
-  const { logOutUser } = useCurrentUser();
-  const [colorMode, setColorMode] = useColorMode();
-
   const trigger = useRef<any>(null);
   const sidebar = useRef<any>(null);
 

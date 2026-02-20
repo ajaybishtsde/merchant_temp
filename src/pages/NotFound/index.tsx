@@ -25,7 +25,7 @@ const NotFound = () => {
           </div>
           <p className="mt-4 text-gray-600">
             Let's get you back{' '}
-            <Link to="/dashboard" className="text-blue-500">
+            <Link to="/" className="text-blue-500">
               home
             </Link>
             .

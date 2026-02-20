@@ -23,7 +23,7 @@ const SignIn: React.FC = () => {
 
   React.useEffect(() => {
     if (currentUser && currentUser.token) {
-      navigate('/dashboard');
+      navigate('/');
     }
   }, [currentUser, navigate]);
 
@@ -41,7 +41,7 @@ const SignIn: React.FC = () => {
 
         localStorage.setItem('admin', JSON.stringify(res.result));
         setCurrentUser(res.result);
-        navigate('/dashboard');
+        navigate('/');
       }
     } catch (error: any) {
       toast.error(error?.message || 'Something went wrong', {

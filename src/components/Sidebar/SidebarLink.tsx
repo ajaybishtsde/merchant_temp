@@ -25,7 +25,10 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
   const { pathname } = location;
 
   const isCurrentPath = useMemo(() => {
-    return pathname === `/${pathnameInclude}` || pathname.includes(pathnameInclude);
+    if (pathnameInclude === '/') {
+      return pathname === '/';
+    }
+    return pathname.startsWith(`/${pathnameInclude}`);
   }, [pathname, pathnameInclude]);
 
   return (

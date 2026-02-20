@@ -6,8 +6,8 @@ import { BiSolidOffer } from 'react-icons/bi';
 export const links = [
   {
     title: 'Dashboard',
-    path: '/dashboard',
-    pathnameInclude: 'dashboard',
+    path: '/',
+    pathnameInclude: '/',
     icon: <LuPieChart className="text-xl" />,
   },
 
